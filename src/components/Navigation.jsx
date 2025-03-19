@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button.jsx";
 import { Globe } from "lucide-react";
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 
 const Navigation = () => {
+  const { user } = useUser();
+
   return (
     <nav className="flex justify-between items-center p-4 bg-black text-white px-8 py-4">
       <div className="flex items-center justify-between h-9">
@@ -17,9 +19,12 @@ const Navigation = () => {
         <div className="ml-8 font-medium">
           <Link to={"/hotels"}>Hotels</Link>
         </div>
-        <div className="ml-8 font-medium">
-          <Link to={"/hotels/create"}>Create Hotel</Link>
-        </div>
+        {/* Hides the Create Hotel element for non-admin users, to prevent unauthorized access. */}
+        {user?.publicMetadata?.role === "admin" && (
+          <div className="ml-8 font-medium">
+            <Link to={"/hotels/create"}>Create Hotel</Link>
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between space-x-4 h-9">
         <Button variant="ghost" className="font-semibold text-sm">
