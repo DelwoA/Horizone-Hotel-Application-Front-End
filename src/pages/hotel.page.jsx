@@ -5,13 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { useCreateBookingMutation } from "@/lib/api";
 
 const HotelPage = () => {
   const { id } = useParams();
-  console.log(id);
-
   const { data: hotel, isLoading, isError, error } = useGetHotelByIdQuery(id);
-  console.log(hotel);
+  const [createBooking, { isLoading: isCreateBookingLoading }] =
+    useCreateBookingMutation();
+
+  const handleBook = async () => {
+    try {
+      await createBooking({
+        hotelId: id,
+        checkIn: new Date(),
+        checkOut: new Date(),
+        roomNumber: 201,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -135,7 +148,9 @@ const HotelPage = () => {
               <p className="font-bold text-2xl">${hotel.price}</p>
               <p className="font-medium text-sm text-neutral-500">per night</p>
             </div>
-            <Button className="font-medium h-10 px-8">Book Now</Button>
+            <Button className="font-medium h-10 px-8" onClick={handleBook}>
+              Book Now
+            </Button>
           </div>
         </div>
       </div>
