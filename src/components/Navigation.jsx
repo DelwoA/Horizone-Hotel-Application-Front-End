@@ -18,7 +18,7 @@ const Navigation = () => {
       {/* Left side navigation links */}
       <div className="flex items-center justify-between h-9">
         {/* Site logo */}
-        <Link to="" className="font-bold text-2xl">
+        <Link to="/" className="font-bold text-2xl">
           Horizone
         </Link>
 
@@ -26,9 +26,9 @@ const Navigation = () => {
         <div className="ml-8 font-medium">
           <Link to="/">Home</Link>
         </div>
-        <div className="ml-8 font-medium">
+        {/* <div className="ml-8 font-medium">
           <Link to={"/hotels"}>Hotels</Link>
-        </div>
+        </div> */}
 
         {/* Admin-only navigation link - conditionally rendered based on user role */}
         {user?.publicMetadata?.role === "admin" && (
