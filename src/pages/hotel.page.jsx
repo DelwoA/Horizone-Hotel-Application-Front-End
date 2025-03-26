@@ -7,12 +7,24 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { useCreateBookingMutation } from "@/lib/api";
 
+/**
+ * HotelPage component - Displays detailed information about a single hotel
+ */
 const HotelPage = () => {
+  // Get hotel ID from URL parameters
   const { id } = useParams();
+
+  // Fetch hotel data based on ID using RTK Query
   const { data: hotel, isLoading, isError, error } = useGetHotelByIdQuery(id);
+
+  // Mutation hook for creating a booking
   const [createBooking, { isLoading: isCreateBookingLoading }] =
     useCreateBookingMutation();
 
+  /*
+   * Handle booking button click
+   * Creates a new booking for the current hotel
+   */
   const handleBook = async () => {
     try {
       await createBooking({
@@ -26,10 +38,12 @@ const HotelPage = () => {
     }
   };
 
+  // Loading state UI with skeleton placeholders
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 min-h-screen">
         <div className="grid md:grid-cols-2 gap-8">
+          {/* Left column - Image and tags skeletons */}
           <div className="space-y-4">
             <Skeleton className="w-full h-[400px] rounded-lg" />
             <div className="flex space-x-2">
@@ -38,7 +52,10 @@ const HotelPage = () => {
               <Skeleton className="h-6 w-28" />
             </div>
           </div>
+
+          {/* Right column - Hotel details skeletons */}
           <div className="space-y-6">
+            {/* Hotel name and favorite button */}
             <div className="flex justify-between items-start">
               <div>
                 <Skeleton className="h-8 w-64 mb-2" />
@@ -46,12 +63,18 @@ const HotelPage = () => {
               </div>
               <Skeleton className="h-10 w-10 rounded-full" />
             </div>
+
+            {/* Rating skeleton */}
             <Skeleton className="h-4 w-36" />
+
+            {/* Description skeleton */}
             <div className="space-y-2">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
             </div>
+
+            {/* Amenities card skeleton */}
             <Card>
               <CardContent className="p-4">
                 <Skeleton className="h-6 w-32 mb-4" />
@@ -65,6 +88,8 @@ const HotelPage = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Price and booking button skeletons */}
             <div className="flex items-center justify-between">
               <div>
                 <Skeleton className="h-8 w-24 mb-1" />
@@ -78,13 +103,16 @@ const HotelPage = () => {
     );
   }
 
+  // Error state UI
   if (isError) {
     return <p className="text-red-500">Error: {isError.message}</p>;
   }
 
+  // Main UI - Displays hotel details after data is loaded
   return (
     <>
       <div className="grid grid-cols-2 gap-x-8 mx-auto my-8 container">
+        {/* Left column - Hotel image and tags */}
         <div>
           <div className="object-cover">
             <img
@@ -93,13 +121,17 @@ const HotelPage = () => {
               alt="Image of the Montmartre Majesty Hotel"
             />
           </div>
+          {/* Feature badges */}
           <div className="flex space-x-4 mt-6">
             <Badge variant="secondary">Rooftop View</Badge>
             <Badge variant="secondary">French Cuisine</Badge>
             <Badge variant="secondary">City Center</Badge>
           </div>
         </div>
+
+        {/* Right column - Hotel details */}
         <div>
+          {/* Hotel header with name, location and favorite button */}
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-3xl font-extrabold">{hotel.name}</h1>
@@ -115,13 +147,17 @@ const HotelPage = () => {
             </div>
           </div>
 
+          {/* Hotel rating display */}
           <div className="flex items-center mt-6">
             <Star fill="currentColor" className="mr-1 h-5 w-5" />
             <p className="font-bold mr-1">4.7</p>
             <p className="text-neutral-500">({hotel.reviews} reviews)</p>
           </div>
 
+          {/* Hotel description */}
           <p className="mt-6 text-neutral-500">{hotel.description}</p>
+
+          {/* Amenities section */}
           <Card className="mt-6 p-4">
             <h2 className="text-xl font-semibold mb-4">Amenities</h2>
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
@@ -143,6 +179,8 @@ const HotelPage = () => {
               </div>
             </div>
           </Card>
+
+          {/* Price and booking section */}
           <div className="flex items-center justify-between mt-6">
             <div>
               <p className="font-bold text-2xl">${hotel.price}</p>

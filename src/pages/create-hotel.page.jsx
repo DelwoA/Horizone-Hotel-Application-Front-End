@@ -1,6 +1,4 @@
 import CreateHotelForm from "@/components/CreateHotelForm";
-import { useUser } from "@clerk/clerk-react";
-import { Navigate } from "react-router";
 
 const createHotelPage = () => {
   // const { user } = useUser();

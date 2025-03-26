@@ -1,12 +1,18 @@
 import { useGetHotelsForSearchQueryQuery } from "@/lib/api";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
 import { useSelector } from "react-redux";
 
+/**
+ * HotelListings component - Displays a list of hotels with filtering by location.
+ * Retrieves hotel data based on search query and allows filtering by location.
+ */
 const HotelListings = () => {
+  // Get the search query from Redux store
   const searchValue = useSelector((state) => state.search.value);
 
+  // Fetch hotels data based on search query using RTK Query
   const {
     data: hotels,
     isLoading,
@@ -16,15 +22,19 @@ const HotelListings = () => {
     query: searchValue,
   });
 
+  // Available location filters
   const locations = ["All", "France", "Italy", "Australia", "Japan"];
+  // State for tracking the selected location filter
   const [selectedLocation, setSelectedLocation] = useState("All");
 
+  // Handler for location tab selection
   const handleSelectLocation = (location) => {
     setSelectedLocation(location);
   };
 
   console.log(hotels);
 
+  // Loading state UI
   if (isLoading) {
     return (
       <section className="my-16 mx-8">
@@ -37,6 +47,7 @@ const HotelListings = () => {
             experience.
           </p>
         </div>
+        {/* Location filter tabs */}
         <div className="flex item-center gap-x-4 mb-4">
           {locations.map((location, i) => {
             return (
@@ -56,6 +67,7 @@ const HotelListings = () => {
     );
   }
 
+  // Error state UI
   if (isError) {
     return (
       <section className="my-16 mx-8">
@@ -68,6 +80,7 @@ const HotelListings = () => {
             experience.
           </p>
         </div>
+        {/* Location filter tabs */}
         <div className="flex item-center gap-x-4 mb-4">
           {locations.map((location, i) => {
             return (
@@ -89,6 +102,7 @@ const HotelListings = () => {
 
   console.log(hotels);
 
+  // Filter hotels based on the selected location
   const filteredHotels =
     selectedLocation === "All"
       ? hotels
@@ -98,30 +112,10 @@ const HotelListings = () => {
 
   console.log(filteredHotels);
 
-  // useEffect(() => {
-  //   getHotels()
-  //     .then((data) => {
-  //       setHotels(data);
-  //     })
-  //     .catch((error) => {
-  //       setIsError(true);
-  //       setError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     }, []);
-  // });
-
-  // useEffect(() => {
-  //   const fetchHotels = async () => {
-  //     const data = await getHotels();
-  //     setHotels(data);
-  //   };
-  //   fetchHotels();
-  // }, []);
-
+  // Main UI - Displays hotels after data is loaded
   return (
     <section className="my-16 mx-8">
+      {/* Section header */}
       <div className="mb-12">
         <h2 className="text-4xl font-bold mb-4 ">
           Top trending hotels worldwide
@@ -131,6 +125,8 @@ const HotelListings = () => {
           experience.
         </p>
       </div>
+
+      {/* Location filter tabs */}
       <div className="flex item-center gap-x-4 mb-4">
         {locations.map((location, i) => {
           return (
@@ -143,6 +139,8 @@ const HotelListings = () => {
           );
         })}
       </div>
+
+      {/* Hotel cards grid - destructures hotel and confidence from each item */}
       <div className="grid grid-cols-4 gap-8">
         {filteredHotels.map(({ hotel, confidence }) => {
           return (
