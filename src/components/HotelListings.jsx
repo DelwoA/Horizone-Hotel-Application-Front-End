@@ -1,53 +1,29 @@
+import { useGetHotelsForSearchQueryQuery } from "@/lib/api";
+import { useState, useEffect } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
-import { setUser } from "@/lib/features/userSlice";
-import { useDispatch } from "react-redux";
-import { useGetHotelsQuery } from "@/lib/api";
 
 const HotelListings = () => {
-  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
+  const searchValue = useSelector((state) => state.search.value);
+
+  const {
+    data: hotels,
+    isLoading,
+    isError,
+    error,
+  } = useGetHotelsForSearchQueryQuery({
+    query: searchValue,
+  });
 
   const locations = ["All", "France", "Italy", "Australia", "Japan"];
-
   const [selectedLocation, setSelectedLocation] = useState("All");
 
   const handleSelectLocation = (location) => {
     setSelectedLocation(location);
   };
 
-  const filteredHotels =
-    selectedLocation === "All"
-      ? hotels
-      : hotels.filter((hotel) =>
-          hotel.location
-            .toLocaleLowerCase()
-            .includes(selectedLocation.toLocaleLowerCase())
-        );
-
-  // useEffect(() => {
-  //   getHotels()
-  //     .then((data) => {
-  //       setHotels(data);
-  //     })
-  //     .catch((error) => {
-  //       setIsError(true);
-  //       setError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     }, []);
-  // });
-
-  // useEffect(() => {
-  //   const fetchHotels = async () => {
-  //     const data = await getHotels();
-  //     setHotels(data);
-  //   };
-  //   fetchHotels();
-  // }, []);
+  console.log(hotels);
 
   if (isLoading) {
     return (
@@ -111,6 +87,39 @@ const HotelListings = () => {
     );
   }
 
+  console.log(hotels);
+
+  const filteredHotels =
+    selectedLocation === "All"
+      ? hotels
+      : hotels.filter(({ hotel }) =>
+          hotel.location.toLowerCase().includes(selectedLocation.toLowerCase())
+        );
+
+  console.log(filteredHotels);
+
+  // useEffect(() => {
+  //   getHotels()
+  //     .then((data) => {
+  //       setHotels(data);
+  //     })
+  //     .catch((error) => {
+  //       setIsError(true);
+  //       setError(error.message);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     }, []);
+  // });
+
+  // useEffect(() => {
+  //   const fetchHotels = async () => {
+  //     const data = await getHotels();
+  //     setHotels(data);
+  //   };
+  //   fetchHotels();
+  // }, []);
+
   return (
     <section className="my-16 mx-8">
       <div className="mb-12">
@@ -135,8 +144,10 @@ const HotelListings = () => {
         })}
       </div>
       <div className="grid grid-cols-4 gap-8">
-        {filteredHotels.map((hotel) => {
-          return <HotelCard key={hotel._id} hotel={hotel} />;
+        {filteredHotels.map(({ hotel, confidence }) => {
+          return (
+            <HotelCard key={hotel._id} hotel={hotel} confidence={confidence} />
+          );
         })}
       </div>
     </section>

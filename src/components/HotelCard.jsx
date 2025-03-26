@@ -58,6 +58,9 @@ const HotelCard = (props) => {
           </span>
         </div>
         <div className="text-xl font-bold">${props.hotel.price}</div>
+        <p className="text-muted-foreground">
+          Similarity: {(props.confidence * 100).toFixed(2)}%
+        </p>
       </div>
     </Link>
   );

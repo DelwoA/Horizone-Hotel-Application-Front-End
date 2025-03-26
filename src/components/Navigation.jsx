@@ -22,7 +22,7 @@ const Navigation = () => {
         {/* Hides the Create Hotel element for non-admin users, to prevent unauthorized access. */}
         {user?.publicMetadata?.role === "admin" && (
           <div className="ml-8 font-medium">
-            <Link to={"/hotels/create"}>Create Hotel</Link>
+            <Link to={"/admin/hotels/create"}>Create Hotel</Link>
           </div>
         )}
       </div>

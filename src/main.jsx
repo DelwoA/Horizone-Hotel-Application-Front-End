@@ -38,7 +38,10 @@ createRoot(document.getElementById("root")).render(
                   <Route path="/account" element={<AccountPage />} />
                 </Route>
                 <Route element={<AdminProtectedLayout />}>
-                  <Route path="/hotels/create" element={<CreateHotelPage />} />
+                  <Route
+                    path="/admin/hotels/create"
+                    element={<CreateHotelPage />}
+                  />
                 </Route>
               </Route>
               <Route path="/sign-in" element={<SignInPage />} />

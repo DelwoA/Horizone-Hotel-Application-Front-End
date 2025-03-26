@@ -20,7 +20,7 @@ export const api = createApi({
       query: () => "hotels",
     }),
     getHotelsForSearchQuery: builder.query({
-      query: ({ query }) => `search/retrieve?query=${searchQuery}`,
+      query: ({ query }) => `hotels/search/retrieve?query=${query}`,
     }),
     getHotelById: builder.query({
       query: (id) => `hotels/${id}`,
@@ -44,7 +44,7 @@ export const api = createApi({
 
 export const {
   useGetHotelsQuery,
-  useGetHotelsForSearchQuery,
+  useGetHotelsForSearchQueryQuery,
   useGetHotelByIdQuery,
   useCreateHotelMutation,
   useCreateBookingMutation,
