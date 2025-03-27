@@ -10,7 +10,14 @@ const AdminProtectedLayout = () => {
    * In a nutshell, wait for user public metadata to load to avoid accessing undefined properties, which could cause runtime errors.
    */
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="text-center">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-base sm:text-lg font-medium">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   // If the user directly enters the route on the URL bar without being signed in, it re-directs to the sign-in page.

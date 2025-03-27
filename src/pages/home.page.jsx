@@ -4,7 +4,7 @@ import HotelListings from "@/components/HotelListings";
 const HomePage = () => {
   return (
     <main>
-      <div className="relative h-screen">
+      <div className="relative h-[85vh] sm:h-[90vh] md:h-screen">
         <Hero />
         <img
           src="assets/hero/hero_1.jpg"

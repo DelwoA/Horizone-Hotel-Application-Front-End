@@ -37,18 +37,18 @@ const HotelListings = () => {
   // Loading state UI
   if (isLoading) {
     return (
-      <section className="my-16 mx-8">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold mb-4 ">
+      <section className="my-8 sm:my-12 md:my-16 mx-4 sm:mx-6 md:mx-8">
+        <div className="mb-6 sm:mb-8 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-lg font-medium">
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg font-medium">
             Discover the most trending hotels worldwide for an unforgetabl
             experience.
           </p>
         </div>
         {/* Location filter tabs */}
-        <div className="flex item-center gap-x-4 mb-4">
+        <div className="flex flex-wrap item-center gap-2 sm:gap-x-4 mb-4 overflow-x-auto pb-2">
           {locations.map((location, i) => {
             return (
               <LocationTab
@@ -60,7 +60,7 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           <p>Loading...</p>
         </div>
       </section>
@@ -70,18 +70,18 @@ const HotelListings = () => {
   // Error state UI
   if (isError) {
     return (
-      <section className="my-16 mx-8">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold mb-4 ">
+      <section className="my-8 sm:my-12 md:my-16 mx-4 sm:mx-6 md:mx-8">
+        <div className="mb-6 sm:mb-8 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-lg font-medium">
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg font-medium">
             Discover the most trending hotels worldwide for an unforgetabl
             experience.
           </p>
         </div>
         {/* Location filter tabs */}
-        <div className="flex item-center gap-x-4 mb-4">
+        <div className="flex flex-wrap item-center gap-2 sm:gap-x-4 mb-4 overflow-x-auto pb-2">
           {locations.map((location, i) => {
             return (
               <LocationTab
@@ -93,7 +93,7 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           <p className="text-red-500">{error}</p>
         </div>
       </section>
@@ -114,20 +114,20 @@ const HotelListings = () => {
 
   // Main UI - Displays hotels after data is loaded
   return (
-    <section className="my-16 mx-8">
+    <section className="my-8 sm:my-12 md:my-16 mx-4 sm:mx-6 md:mx-8">
       {/* Section header */}
-      <div className="mb-12">
-        <h2 className="text-4xl font-bold mb-4 ">
+      <div className="mb-6 sm:mb-8 md:mb-12">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
           Top trending hotels worldwide
         </h2>
-        <p className="text-muted-foreground text-lg font-medium">
+        <p className="text-muted-foreground text-sm sm:text-base md:text-lg font-medium">
           Discover the most trending hotels worldwide for an unforgetabl
           experience.
         </p>
       </div>
 
       {/* Location filter tabs */}
-      <div className="flex item-center gap-x-4 mb-4">
+      <div className="flex flex-wrap item-center gap-2 sm:gap-x-4 mb-4 overflow-x-auto pb-2">
         {locations.map((location, i) => {
           return (
             <LocationTab
@@ -141,7 +141,7 @@ const HotelListings = () => {
       </div>
 
       {/* Hotel cards grid - destructures hotel and confidence from each item */}
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
         {filteredHotels.map(({ hotel, confidence }) => {
           return (
             <HotelCard key={hotel._id} hotel={hotel} confidence={confidence} />

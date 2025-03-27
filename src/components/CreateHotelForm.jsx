@@ -65,20 +65,31 @@ const CreateHotelForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-1/2">
-        <div className="grid gap-4">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="w-full sm:w-4/5 md:w-2/3 lg:w-1/2"
+      >
+        <div className="grid gap-3 sm:gap-4">
           {/* Hotel Name Field */}
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Hotel Name</FormLabel>
+                <FormLabel className="text-sm sm:text-base">
+                  Hotel Name
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Hotel Name" {...field} />
+                  <Input
+                    placeholder="Hotel Name"
+                    {...field}
+                    className="text-sm sm:text-base py-2"
+                  />
                 </FormControl>
-                <FormDescription>Enter the name of the hotel.</FormDescription>
-                <FormMessage />
+                <FormDescription className="text-xs sm:text-sm">
+                  Enter the name of the hotel.
+                </FormDescription>
+                <FormMessage className="text-xs sm:text-sm" />
               </FormItem>
             )}
           />
@@ -89,14 +100,18 @@ const CreateHotelForm = () => {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location</FormLabel>
+                <FormLabel className="text-sm sm:text-base">Location</FormLabel>
                 <FormControl>
-                  <Input placeholder="Location" {...field} />
+                  <Input
+                    placeholder="Location"
+                    {...field}
+                    className="text-sm sm:text-base py-2"
+                  />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs sm:text-sm">
                   Enter the location of the hotel.
                 </FormDescription>
-                <FormMessage />
+                <FormMessage className="text-xs sm:text-sm" />
               </FormItem>
             )}
           />
@@ -107,14 +122,18 @@ const CreateHotelForm = () => {
             name="image"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel className="text-sm sm:text-base">Image</FormLabel>
                 <FormControl>
-                  <Input placeholder="Image URL" {...field} />
+                  <Input
+                    placeholder="Image URL"
+                    {...field}
+                    className="text-sm sm:text-base py-2"
+                  />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs sm:text-sm">
                   Enter the image URL of the hotel.
                 </FormDescription>
-                <FormMessage />
+                <FormMessage className="text-xs sm:text-sm" />
               </FormItem>
             )}
           />
@@ -125,7 +144,7 @@ const CreateHotelForm = () => {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price</FormLabel>
+                <FormLabel className="text-sm sm:text-base">Price</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -134,12 +153,13 @@ const CreateHotelForm = () => {
                       field.onChange(parseFloat(e.target.value));
                     }}
                     value={field.value}
+                    className="text-sm sm:text-base py-2"
                   />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs sm:text-sm">
                   Enter the price per night in USD.
                 </FormDescription>
-                <FormMessage />
+                <FormMessage className="text-xs sm:text-sm" />
               </FormItem>
             )}
           />
@@ -150,14 +170,20 @@ const CreateHotelForm = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel className="text-sm sm:text-base">
+                  Description
+                </FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} />
+                  <Textarea
+                    placeholder="Description"
+                    {...field}
+                    className="text-sm sm:text-base min-h-[100px] sm:min-h-[120px]"
+                  />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs sm:text-sm">
                   Enter the description of the hotel.
                 </FormDescription>
-                <FormMessage />
+                <FormMessage className="text-xs sm:text-sm" />
               </FormItem>
             )}
           />
@@ -165,7 +191,11 @@ const CreateHotelForm = () => {
 
         {/* Form Submission Button - shows loading state */}
         <div className="mt-4">
-          <Button type="submit" disabled={isLoading}>
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full sm:w-auto text-sm sm:text-base py-2 px-4"
+          >
             {isLoading ? "Creating..." : "Create Hotel"}
           </Button>
         </div>

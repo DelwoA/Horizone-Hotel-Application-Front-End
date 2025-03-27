@@ -41,31 +41,31 @@ const HotelPage = () => {
   // Loading state UI with skeleton placeholders
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8 min-h-screen">
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 py-6 sm:py-8 min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Left column - Image and tags skeletons */}
           <div className="space-y-4">
-            <Skeleton className="w-full h-[400px] rounded-lg" />
-            <div className="flex space-x-2">
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-6 w-28" />
+            <Skeleton className="w-full h-[200px] sm:h-[300px] md:h-[400px] rounded-lg" />
+            <div className="flex flex-wrap space-x-2">
+              <Skeleton className="h-5 sm:h-6 w-16 sm:w-24 mb-2" />
+              <Skeleton className="h-5 sm:h-6 w-20 sm:w-32 mb-2" />
+              <Skeleton className="h-5 sm:h-6 w-18 sm:w-28 mb-2" />
             </div>
           </div>
 
           {/* Right column - Hotel details skeletons */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Hotel name and favorite button */}
             <div className="flex justify-between items-start">
               <div>
-                <Skeleton className="h-8 w-64 mb-2" />
-                <Skeleton className="h-4 w-48" />
+                <Skeleton className="h-6 sm:h-8 w-48 sm:w-64 mb-2" />
+                <Skeleton className="h-4 w-36 sm:w-48" />
               </div>
-              <Skeleton className="h-10 w-10 rounded-full" />
+              <Skeleton className="h-8 sm:h-10 w-8 sm:w-10 rounded-full" />
             </div>
 
             {/* Rating skeleton */}
-            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-4 w-28 sm:w-36" />
 
             {/* Description skeleton */}
             <div className="space-y-2">
@@ -76,13 +76,13 @@ const HotelPage = () => {
 
             {/* Amenities card skeleton */}
             <Card>
-              <CardContent className="p-4">
-                <Skeleton className="h-6 w-32 mb-4" />
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="p-3 sm:p-4">
+                <Skeleton className="h-5 sm:h-6 w-24 sm:w-32 mb-3 sm:mb-4" />
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {[...Array(4)].map((_, index) => (
                     <div key={index} className="flex items-center">
-                      <Skeleton className="h-5 w-5 mr-2" />
-                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-4 sm:h-5 w-4 sm:w-5 mr-2" />
+                      <Skeleton className="h-3 sm:h-4 w-16 sm:w-24" />
                     </div>
                   ))}
                 </div>
@@ -92,10 +92,10 @@ const HotelPage = () => {
             {/* Price and booking button skeletons */}
             <div className="flex items-center justify-between">
               <div>
-                <Skeleton className="h-8 w-24 mb-1" />
-                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-6 sm:h-8 w-20 sm:w-24 mb-1" />
+                <Skeleton className="h-3 sm:h-4 w-12 sm:w-16" />
               </div>
-              <Skeleton className="h-12 w-32" />
+              <Skeleton className="h-10 sm:h-12 w-24 sm:w-32" />
             </div>
           </div>
         </div>
@@ -105,13 +105,13 @@ const HotelPage = () => {
 
   // Error state UI
   if (isError) {
-    return <p className="text-red-500">Error: {isError.message}</p>;
+    return <p className="text-red-500 p-4">Error: {isError.message}</p>;
   }
 
   // Main UI - Displays hotel details after data is loaded
   return (
     <>
-      <div className="grid grid-cols-2 gap-x-8 mx-auto my-8 container">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 mx-auto my-6 sm:my-8 container px-4">
         {/* Left column - Hotel image and tags */}
         <div>
           <div className="object-cover">
@@ -122,7 +122,7 @@ const HotelPage = () => {
             />
           </div>
           {/* Feature badges */}
-          <div className="flex space-x-4 mt-6">
+          <div className="flex flex-wrap gap-2 mt-4 sm:mt-6">
             <Badge variant="secondary">Rooftop View</Badge>
             <Badge variant="secondary">French Cuisine</Badge>
             <Badge variant="secondary">City Center</Badge>
@@ -134,59 +134,76 @@ const HotelPage = () => {
           {/* Hotel header with name, location and favorite button */}
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-extrabold">{hotel.name}</h1>
-              <div className="flex items-center mt-2 text-neutral-500">
-                <MapPin className="mr-1 h-5 w-5" />
-                <p>{hotel.location}</p>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold">
+                {hotel.name}
+              </h1>
+              <div className="flex items-center mt-1 sm:mt-2 text-neutral-500">
+                <MapPin className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
+                <p className="text-sm sm:text-base">{hotel.location}</p>
               </div>
             </div>
             <div>
-              <Button variant="outline" size="icon">
-                <Star />
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8 sm:h-10 sm:w-10"
+              >
+                <Star className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
           </div>
 
           {/* Hotel rating display */}
-          <div className="flex items-center mt-6">
-            <Star fill="currentColor" className="mr-1 h-5 w-5" />
-            <p className="font-bold mr-1">4.7</p>
-            <p className="text-neutral-500">({hotel.reviews} reviews)</p>
+          <div className="flex items-center mt-4 sm:mt-6">
+            <Star fill="currentColor" className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
+            <p className="font-bold mr-1 text-sm sm:text-base">4.7</p>
+            <p className="text-neutral-500 text-sm sm:text-base">
+              ({hotel.reviews} reviews)
+            </p>
           </div>
 
           {/* Hotel description */}
-          <p className="mt-6 text-neutral-500">{hotel.description}</p>
+          <p className="mt-4 sm:mt-6 text-neutral-500 text-sm sm:text-base">
+            {hotel.description}
+          </p>
 
           {/* Amenities section */}
-          <Card className="mt-6 p-4">
-            <h2 className="text-xl font-semibold mb-4">Amenities</h2>
-            <div className="grid grid-cols-2 grid-rows-2 gap-4">
+          <Card className="mt-4 sm:mt-6 p-3 sm:p-4">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+              Amenities
+            </h2>
+            <div className="grid grid-cols-2 grid-rows-2 gap-3 sm:gap-4">
               <div className="flex items-center">
-                <Wifi className="mr-2 h-5 w-5" />
-                <p>Free Wi-Fi</p>
+                <Wifi className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <p className="text-sm sm:text-base">Free Wi-Fi</p>
               </div>
               <div className="flex items-center">
-                <Menu className="mr-2 h-5 w-5" />
-                <p>Restaurant</p>
+                <Menu className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <p className="text-sm sm:text-base">Restaurant</p>
               </div>
               <div className="flex items-center">
-                <Tv className="mr-2 h-5 w-5" />
-                <p>Flat-screen TV</p>
+                <Tv className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <p className="text-sm sm:text-base">Flat-screen TV</p>
               </div>
               <div className="flex items-center">
-                <Coffee className="mr-2 h-5 w-5" />
-                <p>Coffee maker</p>
+                <Coffee className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <p className="text-sm sm:text-base">Coffee maker</p>
               </div>
             </div>
           </Card>
 
           {/* Price and booking section */}
-          <div className="flex items-center justify-between mt-6">
+          <div className="flex items-center justify-between mt-4 sm:mt-6">
             <div>
-              <p className="font-bold text-2xl">${hotel.price}</p>
-              <p className="font-medium text-sm text-neutral-500">per night</p>
+              <p className="font-bold text-xl sm:text-2xl">${hotel.price}</p>
+              <p className="font-medium text-xs sm:text-sm text-neutral-500">
+                per night
+              </p>
             </div>
-            <Button className="font-medium h-10 px-8" onClick={handleBook}>
+            <Button
+              className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
+              onClick={handleBook}
+            >
               Book Now
             </Button>
           </div>

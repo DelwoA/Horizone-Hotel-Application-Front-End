@@ -20,7 +20,7 @@ const HotelCard = (props) => {
     <Link
       to={`hotels/${props.hotel._id}`}
       key={props.hotel._id}
-      className="group"
+      className="group w-full flex flex-col"
     >
       {/* Hotel image container with hover effect */}
       <div className="aspect-[4/3] overflow-hidden rounded-xl">
@@ -32,32 +32,38 @@ const HotelCard = (props) => {
       </div>
 
       {/* Hotel details section */}
-      <div className="mt-3 space-y-2">
+      <div className="mt-2 sm:mt-3 space-y-1 sm:space-y-2">
         {/* Hotel name */}
-        <h3 className="text-lg font-semibold">{props.hotel.name}</h3>
+        <h3 className="text-base sm:text-lg font-semibold line-clamp-1">
+          {props.hotel.name}
+        </h3>
 
         {/* Location with icon */}
         <div className="flex items-center text-muted-foreground">
-          <MapPin className="h-4 w-4 mr-1" />
-          <p>{props.hotel.location}</p>
+          <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+          <p className="text-sm sm:text-base line-clamp-1">
+            {props.hotel.location}
+          </p>
         </div>
 
         {/* Ratings section */}
         <div className="flex items-center">
-          <Star className="h-4 w-4 fill-primary text-primary" />
-          <span className="ml-1 font-medium">
+          <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-primary text-primary" />
+          <span className="ml-1 text-sm sm:text-base font-medium">
             {props.hotel?.rating ?? "No Rating"}
           </span>
-          <span className="ml-1 text-muted-foreground">
+          <span className="ml-1 text-xs sm:text-sm text-muted-foreground">
             {`(${props.hotel.reviews?.toLocaleString() ?? "No"} Reviews)`}
           </span>
         </div>
 
         {/* Price display */}
-        <div className="text-xl font-bold">${props.hotel.price}</div>
+        <div className="text-base sm:text-xl font-bold">
+          ${props.hotel.price}
+        </div>
 
         {/* Search confidence score (if from search results) */}
-        <p className="text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Similarity: {(props.confidence * 100).toFixed(2)}%
         </p>
       </div>
