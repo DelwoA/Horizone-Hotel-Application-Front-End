@@ -14,32 +14,29 @@ const Navigation = () => {
   const { user } = useUser();
 
   return (
-    <nav className="flex flex-col sm:flex-row justify-between items-center p-2 sm:p-4 bg-black text-white px-4 sm:px-8 py-3 sm:py-4 gap-4 sm:gap-0">
+    <nav className="flex justify-between items-center bg-black text-white px-4 sm:px-8 py-3 sm:py-4">
       {/* Left side navigation links */}
-      <div className="flex items-center justify-center sm:justify-between w-full sm:w-auto h-9">
+      <div className="flex items-center h-9">
         {/* Site logo */}
         <Link to="/" className="font-bold text-xl sm:text-2xl">
           Horizone
         </Link>
 
-        {/* Main navigation links */}
-        <div className="ml-4 sm:ml-8 font-medium">
+        {/* Hide on mobile to maintain single line */}
+        <div className="hidden sm:block ml-8 font-medium">
           <Link to="/">Home</Link>
         </div>
-        {/* <div className="ml-4 sm:ml-8 font-medium">
-          <Link to={"/hotels"}>Hotels</Link>
-        </div> */}
 
-        {/* Admin-only navigation link - conditionally rendered based on user role */}
+        {/* Admin-only navigation link - hidden on mobile */}
         {user?.publicMetadata?.role === "admin" && (
-          <div className="ml-4 sm:ml-8 font-medium">
+          <div className="hidden sm:block ml-8 font-medium">
             <Link to={"/admin/hotels/create"}>Create Hotel</Link>
           </div>
         )}
       </div>
 
       {/* Right side UI elements */}
-      <div className="flex items-center justify-center sm:justify-between space-x-2 sm:space-x-4 h-9 w-full sm:w-auto">
+      <div className="flex items-center space-x-2 sm:space-x-4 h-9">
         {/* Language selector */}
         <Button
           variant="ghost"

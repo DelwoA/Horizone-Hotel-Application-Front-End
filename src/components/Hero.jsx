@@ -41,27 +41,27 @@ const Hero = () => {
       <div className="flex justify-center">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row p-2 rounded-full sm:rounded-full max-w-sm sm:max-w-xl md:max-w-3xl items-center w-full bg-black/10 backdrop-blur-md shadow-lg"
+          className="flex items-center rounded-full p-2 max-w-sm sm:max-w-xl md:max-w-3xl w-full bg-black/10 backdrop-blur-md shadow-lg"
         >
           {/* Search input field with transparent styling */}
           <Input
             type="text"
             name="search"
             placeholder="Describe your destination..."
-            className="bg-transparent border-none outline-none text-white placeholder:text-white/50 placeholder:text-base sm:placeholder:text-lg placeholder:font-medium text-base sm:text-lg font-medium w-full mb-2 sm:mb-0"
+            className="bg-transparent border-none outline-none text-white placeholder:text-white/50 placeholder:text-sm sm:placeholder:text-lg placeholder:font-medium text-base sm:text-lg font-medium w-full"
           />
 
           {/* Search button with AI sparkle icon */}
           <Button
             type="submit"
             variant="default"
-            className="flex items-center justify-center px-3 sm:px-4 text-white text-base sm:text-lg font-semibold w-full sm:w-auto md:w-48 h-10 sm:h-12 rounded-full"
+            className="flex items-center justify-center px-3 sm:px-4 text-white text-sm sm:text-lg font-semibold h-10 sm:h-12 rounded-full whitespace-nowrap ml-2"
           >
             <Sparkles
               style={{ width: "16px", height: "16px" }}
               className="mr-1 sm:mr-2 animate-pulse text-sky-400"
-            ></Sparkles>
-            <div>AI Search</div>
+            />
+            <span>AI Search</span>
           </Button>
         </form>
       </div>

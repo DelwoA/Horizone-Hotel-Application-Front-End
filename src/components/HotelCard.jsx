@@ -32,15 +32,15 @@ const HotelCard = (props) => {
       </div>
 
       {/* Hotel details section */}
-      <div className="mt-2 sm:mt-3 space-y-1 sm:space-y-2">
+      <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
         {/* Hotel name */}
-        <h3 className="text-base sm:text-lg font-semibold line-clamp-1">
+        <h3 className="text-lg sm:text-xl font-semibold line-clamp-1">
           {props.hotel.name}
         </h3>
 
         {/* Location with icon */}
         <div className="flex items-center text-muted-foreground">
-          <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+          <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
           <p className="text-sm sm:text-base line-clamp-1">
             {props.hotel.location}
           </p>
@@ -48,7 +48,7 @@ const HotelCard = (props) => {
 
         {/* Ratings section */}
         <div className="flex items-center">
-          <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-primary text-primary" />
+          <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-primary text-primary" />
           <span className="ml-1 text-sm sm:text-base font-medium">
             {props.hotel?.rating ?? "No Rating"}
           </span>
@@ -58,12 +58,12 @@ const HotelCard = (props) => {
         </div>
 
         {/* Price display */}
-        <div className="text-base sm:text-xl font-bold">
+        <div className="text-lg sm:text-2xl font-bold mt-1">
           ${props.hotel.price}
         </div>
 
         {/* Search confidence score (if from search results) */}
-        <p className="text-xs sm:text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Similarity: {(props.confidence * 100).toFixed(2)}%
         </p>
       </div>
