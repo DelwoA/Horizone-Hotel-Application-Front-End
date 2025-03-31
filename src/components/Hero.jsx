@@ -27,21 +27,22 @@ const Hero = () => {
   };
 
   return (
-    <div className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8">
-      {/* Hero heading and description */}
-      <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 text-center">
-        Find Your Best Staycation
-      </h1>
-      <p className="text-white text-base sm:text-lg md:text-xl font-medium mb-8 sm:mb-10 md:mb-12 max-w-xs sm:max-w-lg md:max-w-2xl mx-auto text-center">
-        Describe your dream destination and experience, and we'll find the
-        perfect place for you.
-      </p>
+    <div className="relative min-h-screen">
+      {/* Hero Content */}
+      <div className="relative z-10 flex flex-col items-center  text-white justify-center px-8 pt-32 pb-32">
+        <h1 className="text-4xl md:text-6xl font-bold  mb-8 text-center">
+          Find Your Best Staycation
+        </h1>
+        <p className="text-xl  mb-12 text-center  max-w-2xl">
+          Describe your dream destination and experience, and we'll find the
+          perfect place for you.
+        </p>
 
-      {/* AI-powered search form */}
-      <div className="flex justify-center">
+        {/* AI-powered search form */}
+
         <form
           onSubmit={handleSubmit}
-          className="flex items-center rounded-full p-2 max-w-sm sm:max-w-xl md:max-w-3xl w-full bg-black/10 backdrop-blur-md shadow-lg"
+          className="w-full max-w-3xl bg-black/10  backdrop-blur-md lg:h-16 rounded-full p-2 flex items-center"
         >
           {/* Search input field with transparent styling */}
           <Input

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Backend server URL
-const BACKEND_URL = "https://aidf-horizone-backend-delwoathauda.onrender.com";
+const BACKEND_URL = "http://localhost:8000";
 
 /**
  * API configuration using Redux Toolkit Query
