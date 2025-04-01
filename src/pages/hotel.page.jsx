@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { useCreateBookingMutation } from "@/lib/api";
+import HotelBooking from "@/components/HotelBooking";
 
 /**
  * HotelPage component - Displays detailed information about a single hotel
@@ -16,27 +17,6 @@ const HotelPage = () => {
 
   // Fetch hotel data based on ID using RTK Query
   const { data: hotel, isLoading, isError, error } = useGetHotelByIdQuery(id);
-
-  // Mutation hook for creating a booking
-  const [createBooking, { isLoading: isCreateBookingLoading }] =
-    useCreateBookingMutation();
-
-  /*
-   * Handle booking button click
-   * Creates a new booking for the current hotel
-   */
-  const handleBook = async () => {
-    try {
-      await createBooking({
-        hotelId: id,
-        checkIn: new Date(),
-        checkOut: new Date(),
-        roomNumber: 201,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Loading state UI with skeleton placeholders
   if (isLoading) {
@@ -200,12 +180,13 @@ const HotelPage = () => {
                 per night
               </p>
             </div>
-            <Button
+            {/* <Button
               className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
               onClick={handleBook}
             >
               Book Now
-            </Button>
+            </Button> */}
+            <HotelBooking hotelId={id} />
           </div>
         </div>
       </div>
