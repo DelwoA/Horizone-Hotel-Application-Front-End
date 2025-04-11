@@ -24,6 +24,11 @@ const HotelBooking = ({ hotelId }) => {
   // Manage dialog open/close state
   const [open, setOpen] = useState(false);
 
+  // Format date for API submission
+  const formatDateForAPI = (date) => {
+    return date ? date.toISOString() : null;
+  };
+
   // Handle form submission
   const onSubmit = async (values) => {
     try {
@@ -42,24 +47,37 @@ const HotelBooking = ({ hotelId }) => {
       // Format the full phone number with country code
       const fullPhoneNumber = `${countryCode}${phoneNumber}`;
 
-      await createBooking({
+      // Create the booking payload
+      const bookingData = {
         hotelId,
-        checkIn: checkInDate,
-        checkOut: checkOutDate,
+        checkIn: formatDateForAPI(checkInDate),
+        checkOut: formatDateForAPI(checkOutDate),
         firstName,
         lastName,
         email,
         phoneNumber: fullPhoneNumber,
         roomNumber: roomNumber || 1,
-      }).unwrap();
+      };
+
+      console.log("Submitting booking:", bookingData);
+
+      // Send booking to the API
+      const response = await createBooking(bookingData).unwrap();
 
       toast.dismiss();
       toast.success("Booking created successfully");
       setOpen(false);
     } catch (error) {
+      console.error("Booking error:", error);
       toast.dismiss();
       toast.error("Error creating booking");
-      toast.error(error?.data?.message || "Error creating booking");
+
+      // Display more specific error message if available
+      if (error?.data?.message) {
+        toast.error(error.data.message);
+      } else if (error?.message) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -76,8 +94,11 @@ const HotelBooking = ({ hotelId }) => {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base">
-          Book Now
+        <Button
+          className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
+          disabled={isLoading}
+        >
+          {isLoading ? "Booking..." : "Book Now"}
         </Button>
       </DialogTrigger>
 

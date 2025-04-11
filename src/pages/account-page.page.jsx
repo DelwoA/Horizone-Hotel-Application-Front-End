@@ -1,29 +1,27 @@
 import { useUser } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
 import PersonalInfoCard from "@/components/PersonalInfoCard";
 import BookingsList from "@/components/BookingsList";
+import { useGetUserBookingsQuery } from "@/lib/api";
 
 const AccountPage = () => {
   const { user, isLoaded } = useUser();
-  const [bookings, setBookings] = useState([]);
-  const [isLoadingBookings, setIsLoadingBookings] = useState(false);
 
-  // In a real app, you'd fetch bookings from an API
-  // This is just simulating that process
-  useEffect(() => {
-    // Only fetch bookings when the user is loaded
-    if (isLoaded && user) {
-      // You could replace this with a real API call
-      // Example: fetchBookingsForUser(user.id)
-      setIsLoadingBookings(true);
+  // Get the user ID from Clerk
+  const userId = user?.id;
 
-      // Simulate API delay
-      setTimeout(() => {
-        setIsLoadingBookings(false);
-        // We don't actually fetch here since we're using mock data in the BookingsList component
-      }, 500);
-    }
-  }, [isLoaded, user]);
+  // Fetch user bookings from the API
+  const {
+    data: bookings,
+    isLoading: isLoadingBookings,
+    error: bookingsError,
+  } = useGetUserBookingsQuery(userId, {
+    // Only run the query when we have a user ID
+    skip: !userId,
+    // Refetch on window focus
+    refetchOnFocus: true,
+    // Refetch when network connection is restored
+    refetchOnReconnect: true,
+  });
 
   // Show a simple loading state while user data is loading
   if (!isLoaded) {
@@ -45,6 +43,13 @@ const AccountPage = () => {
         <h2 className="text-2xl font-semibold mb-6">My Bookings</h2>
         {isLoadingBookings ? (
           <p className="text-center py-8">Loading your bookings...</p>
+        ) : bookingsError ? (
+          <div className="text-center py-8">
+            <p className="text-red-500">Error loading bookings</p>
+            <p className="text-muted-foreground mt-2">
+              {bookingsError.toString()}
+            </p>
+          </div>
         ) : (
           <BookingsList bookings={bookings} />
         )}

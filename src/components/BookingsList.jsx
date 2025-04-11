@@ -1,35 +1,12 @@
 import BookingCard from "./BookingCard";
 
-const mockBookings = [
-  {
-    id: "BOK-123456",
-    hotelName: "Grand Horizone Hotel",
-    guestName: "Delwo Athauda",
-    roomNumber: "301",
-    checkIn: "2023-04-15",
-    checkOut: "2023-04-18",
-    email: "delwo2003@gmail.com",
-    phone: "+94769183306",
-    status: "upcoming",
-  },
-  {
-    id: "BOK-789012",
-    hotelName: "Seaside Resort",
-    guestName: "Delwo Athauda",
-    roomNumber: "205",
-    checkIn: "2023-03-10",
-    checkOut: "2023-03-15",
-    email: "delwo2003@gmail.com",
-    phone: "+94769183306",
-    status: "completed",
-  },
-];
+export function BookingsList({ bookings }) {
+  // Check if bookings exist and are valid
+  const hasBookings =
+    bookings && Array.isArray(bookings) && bookings.length > 0;
 
-export function BookingsList({ bookings = mockBookings }) {
-  // Use either the provided bookings or the mock data
-  const bookingsToDisplay = bookings || mockBookings;
-
-  if (!bookingsToDisplay || bookingsToDisplay.length === 0) {
+  // If there are no bookings, show empty state
+  if (!hasBookings) {
     return (
       <div className="text-center py-12 bg-muted/30 rounded-lg">
         <p className="text-muted-foreground">
@@ -39,10 +16,11 @@ export function BookingsList({ bookings = mockBookings }) {
     );
   }
 
+  // Display the bookings
   return (
     <div className="space-y-6">
-      {bookingsToDisplay.map((booking) => (
-        <BookingCard key={booking.id} booking={booking} />
+      {bookings.map((booking) => (
+        <BookingCard key={booking.id || booking._id} booking={booking} />
       ))}
     </div>
   );

@@ -59,6 +59,32 @@ export const api = createApi({
         body: booking,
       }),
     }),
+
+    // Get user bookings
+    getUserBookings: builder.query({
+      query: (userId) => `bookings/user${userId ? `/${userId}` : ""}`,
+      // Transform response to match frontend component expectations
+      transformResponse: (response) => {
+        if (!Array.isArray(response)) {
+          return [];
+        }
+
+        return response.map((booking) => ({
+          id: booking._id || booking.id,
+          hotelId: booking.hotelId,
+          hotelName: booking.hotelName || "Hotel information loading...",
+          guestName: `${booking.firstName || ""} ${
+            booking.lastName || ""
+          }`.trim(),
+          roomNumber: booking.roomNumber,
+          checkIn: booking.checkIn,
+          checkOut: booking.checkOut,
+          email: booking.email,
+          phone: booking.phoneNumber,
+          status: determineBookingStatus(booking.checkIn, booking.checkOut),
+        }));
+      },
+    }),
   }),
 });
 
@@ -69,4 +95,20 @@ export const {
   useGetHotelByIdQuery,
   useCreateHotelMutation,
   useCreateBookingMutation,
+  useGetUserBookingsQuery,
 } = api;
+
+// Helper function to determine booking status based on dates
+const determineBookingStatus = (checkInDate, checkOutDate) => {
+  const now = new Date();
+  const checkIn = new Date(checkInDate);
+  const checkOut = new Date(checkOutDate);
+
+  if (now < checkIn) {
+    return "upcoming";
+  } else if (now > checkOut) {
+    return "completed";
+  } else {
+    return "active";
+  }
+};
