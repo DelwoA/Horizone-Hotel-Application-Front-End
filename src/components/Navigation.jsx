@@ -14,22 +14,20 @@ const Navigation = () => {
   const { user } = useUser();
 
   return (
-    <nav className="flex justify-between items-center bg-black text-white px-4 sm:px-8 py-3 sm:py-4">
+    <nav className="flex justify-between items-center bg-white px-4 sm:px-8 py-3 sm:py-4 mx-52">
       {/* Left side navigation links */}
       <div className="flex items-center h-9">
         {/* Site logo */}
-        <Link to="/" className="font-bold text-xl sm:text-2xl">
+        <Link
+          to="/"
+          className="font-bold text-teal-800 sm:text-3xl md:text-2xl"
+        >
           Horizone
         </Link>
 
-        {/* Hide on mobile to maintain single line */}
-        <div className="hidden sm:block ml-8 font-medium">
-          <Link to="/">Home</Link>
-        </div>
-
         {/* Admin-only navigation link - hidden on mobile */}
         {user?.publicMetadata?.role === "admin" && (
-          <div className="hidden sm:block ml-8 font-medium">
+          <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
             <Link to={"/admin/hotels/create"}>Create Hotel</Link>
           </div>
         )}
@@ -40,7 +38,7 @@ const Navigation = () => {
         {/* Language selector */}
         <Button
           variant="ghost"
-          className="font-semibold text-xs sm:text-sm hidden sm:flex"
+          className="font-semibold text-xs text-teal-800 hover:text-primary-color sm:text-sm hidden sm:flex"
         >
           <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" /> EN
         </Button>
@@ -49,12 +47,15 @@ const Navigation = () => {
         <SignedOut>
           <Button
             variant="ghost"
-            className="font-semibold text-xs sm:text-sm"
+            className="font-semibold text-xs text-white bg-teal-600 hover:bg-teal-700 hover:text-white sm:text-sm"
             asChild
           >
             <Link to={"/sign-in"}>Log In</Link>
           </Button>
-          <Button className="font-semibold text-xs sm:text-sm" asChild>
+          <Button
+            className="font-semibold text-xs text-white bg-teal-500 hover:bg-teal-700 hover:text-white sm:text-sm"
+            asChild
+          >
             <Link to={"/sign-up"}>Sign Up</Link>
           </Button>
         </SignedOut>
@@ -62,7 +63,10 @@ const Navigation = () => {
         {/* User profile and account access - shown only to signed in users */}
         <SignedIn>
           <UserButton />
-          <Button className="text-xs sm:text-sm" asChild>
+          <Button
+            className="text-xs text-white bg-teal-600 hover:bg-teal-700 sm:text-sm"
+            asChild
+          >
             <Link to={"/account"}>My Account</Link>
           </Button>
         </SignedIn>

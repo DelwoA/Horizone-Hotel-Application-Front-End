@@ -47,7 +47,7 @@ const AccountPage = () => {
           <div className="text-center py-8">
             <p className="text-red-500">Error loading bookings</p>
             <p className="text-muted-foreground mt-2">
-              {bookingsError.toString()}
+              You don't have any bookings yet.
             </p>
           </div>
         ) : (
