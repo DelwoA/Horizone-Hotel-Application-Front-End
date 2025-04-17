@@ -95,7 +95,7 @@ const HotelBooking = ({ hotelId }) => {
     >
       <DialogTrigger asChild>
         <Button
-          className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
+          className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base bg-teal-700 hover:bg-teal-900 text-white"
           disabled={isLoading}
         >
           {isLoading ? "Booking..." : "Book Now"}

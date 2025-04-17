@@ -85,18 +85,18 @@ const HotelPage = () => {
 
   // Error state UI
   if (isError) {
-    return <p className="text-red-500 p-4">Error: {isError.message}</p>;
+    return <p className="text-red-500 p-4 mx-52">Error: {isError.message}</p>;
   }
 
   // Main UI - Displays hotel details after data is loaded
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 mx-auto my-6 sm:my-8 container px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 mx-52 my-6 sm:my-8 px-4">
         {/* Left column - Hotel image and tags */}
         <div>
-          <div className="object-cover">
+          <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
             <img
-              className="rounded-lg w-full h-full"
+              className="w-full h-full object-cover object-center absolute inset-0"
               src={hotel.image}
               alt="Image of the Montmartre Majesty Hotel"
             />
@@ -134,7 +134,7 @@ const HotelPage = () => {
           </div>
 
           {/* Hotel rating display */}
-          <div className="flex items-center mt-4 sm:mt-6">
+          <div className="text-teal-600 fill-teal-600  flex items-center mt-4 sm:mt-6">
             <Star fill="currentColor" className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
             <p className="font-bold mr-1 text-sm sm:text-base">4.7</p>
             <p className="text-neutral-500 text-sm sm:text-base">
@@ -180,12 +180,6 @@ const HotelPage = () => {
                 per night
               </p>
             </div>
-            {/* <Button
-              className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
-              onClick={handleBook}
-            >
-              Book Now
-            </Button> */}
             <HotelBooking hotelId={id} />
           </div>
         </div>

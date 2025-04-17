@@ -37,12 +37,12 @@ const HotelListings = () => {
   // Loading state UI
   if (isLoading) {
     return (
-      <section className="my-12 sm:my-16 md:my-20 mx-4 sm:mx-6 md:mx-8">
+      <section className="sm:my-16 md:my-20 lg:my-12 sm:mx-6 md:mx-8 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-8 text-base sm:text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -60,8 +60,8 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          <p>Loading...</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <p className="text-gray-600 font-medium">Loading...</p>
         </div>
       </section>
     );
@@ -70,12 +70,12 @@ const HotelListings = () => {
   // Error state UI
   if (isError) {
     return (
-      <section className="my-12 sm:my-16 md:my-20 mx-4 sm:mx-6 md:mx-8">
+      <section className="sm:my-16 md:my-20 lg:my-12 sm:mx-6 md:mx-8 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-8 text-base sm:text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -93,8 +93,10 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          <p className="text-red-500">{error}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <p className="text-red-500 font-medium">
+            {error?.toString() || "An error occurred while loading hotels."}
+          </p>
         </div>
       </section>
     );

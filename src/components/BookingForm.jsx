@@ -268,7 +268,10 @@ const BookingForm = ({ onSubmit, onCancel }) => {
           >
             Cancel
           </Button>
-          <Button type="submit" className="w-full sm:w-auto order-1 sm:order-2">
+          <Button
+            type="submit"
+            className="w-full sm:w-auto order-1 sm:order-2  bg-teal-700 hover:bg-teal-900"
+          >
             Complete Booking
           </Button>
         </DialogFooter>
