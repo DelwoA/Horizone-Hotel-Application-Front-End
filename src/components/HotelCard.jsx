@@ -58,14 +58,14 @@ const HotelCard = (props) => {
         </div>
 
         {/* Price and similarity display */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-5">
           <div>
             <span className="text-2xl font-bold text-gray-900">
               ${props.hotel.price}
             </span>
             <span className="text-gray-500 text-sm">/night</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-500 mt-1">
             Similarity:{" "}
             {props.confidence ? (props.confidence * 100).toFixed(2) : "N/A"}%
           </div>

@@ -14,14 +14,11 @@ const Navigation = () => {
   const { user } = useUser();
 
   return (
-    <nav className="flex justify-between items-center bg-white px-4 sm:px-8 py-3 sm:py-4 mx-52">
+    <nav className="flex justify-between items-center bg-white px-8 py-4 mx-1 md:mx-20 lg:mx-52">
       {/* Left side navigation links */}
       <div className="flex items-center h-9">
         {/* Site logo */}
-        <Link
-          to="/"
-          className="font-bold text-teal-800 sm:text-3xl md:text-2xl"
-        >
+        <Link to="/" className="font-bold text-teal-800 text-2xl md:text-2xl">
           Horizone
         </Link>
 
@@ -47,13 +44,13 @@ const Navigation = () => {
         <SignedOut>
           <Button
             variant="ghost"
-            className="font-semibold text-xs text-white bg-teal-600 hover:bg-teal-700 hover:text-white sm:text-sm"
+            className="font-semibold text-xs text-white bg-teal-600 hover:bg-teal-700 hover:text-white sm:text-sm h-9"
             asChild
           >
             <Link to={"/sign-in"}>Log In</Link>
           </Button>
           <Button
-            className="font-semibold text-xs text-white bg-teal-500 hover:bg-teal-700 hover:text-white sm:text-sm"
+            className="font-semibold text-xs text-white bg-teal-500 hover:bg-teal-700 hover:text-white sm:text-sm h-9"
             asChild
           >
             <Link to={"/sign-up"}>Sign Up</Link>
