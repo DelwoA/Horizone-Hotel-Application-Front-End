@@ -116,7 +116,7 @@ const HotelListings = () => {
 
   // Main UI - Displays hotels after data is loaded
   return (
-    <section className="my-10 mx-10 md:my-14 lg:my-12 md:mx-20 lg:mx-52">
+    <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
       {/* Section header */}
       <div className="mb-8 sm:mb-10 md:mb-12">
         <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">

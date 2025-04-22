@@ -17,8 +17,10 @@ import AccountPage from "./pages/account-page.page";
 import ProtectedLayout from "./layouts/protected.layout";
 import AdminProtectedLayout from "./layouts/admin-protected.layout";
 
+// Initialize Clerk
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
+// Check if PUBLISHABLE_KEY is defined
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }

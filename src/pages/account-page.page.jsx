@@ -26,35 +26,41 @@ const AccountPage = () => {
   // Show a simple loading state while user data is loading
   if (!isLoaded) {
     return (
-      <main className="container mx-auto px-4 py-6 sm:py-8 min-h-screen">
-        <p className="text-center py-12">Loading your account information...</p>
-      </main>
+      <div className="bg-gray-50 min-h-screen">
+        <main className="mx-10 py-10 md:mx-20 md:py-14 lg:mx-52 lg:py-12">
+          <p className="text-center py-12">
+            Loading your account information...
+          </p>
+        </main>
+      </div>
     );
   }
 
   return (
-    <main className="container mx-auto px-4 py-6 sm:py-8 min-h-screen">
-      <h1 className="text-3xl font-bold tracking-tight mb-8 mt-3">
-        My Account
-      </h1>
-      <PersonalInfoCard user={user} />
+    <div className="bg-gray-50 min-h-screen">
+      <main className="mx-10 py-10 md:mx-20 md:py-14 lg:mx-52 lg:py-12">
+        <h1 className="text-3xl font-bold tracking-tight mb-8 mt-3">
+          My Account
+        </h1>
+        <PersonalInfoCard user={user} />
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-6">My Bookings</h2>
-        {isLoadingBookings ? (
-          <p className="text-center py-8">Loading your bookings...</p>
-        ) : bookingsError ? (
-          <div className="text-center py-8">
-            <p className="text-red-500">Error loading bookings</p>
-            <p className="text-muted-foreground mt-2">
-              You don't have any bookings yet.
-            </p>
-          </div>
-        ) : (
-          <BookingsList bookings={bookings} />
-        )}
-      </div>
-    </main>
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold mb-6">My Bookings</h2>
+          {isLoadingBookings ? (
+            <p className="text-center py-8">Loading your bookings...</p>
+          ) : bookingsError ? (
+            <div className="text-center py-8">
+              <p className="text-red-500">Error loading bookings</p>
+              <p className="text-muted-foreground mt-2">
+                You don't have any bookings yet.
+              </p>
+            </div>
+          ) : (
+            <BookingsList bookings={bookings} />
+          )}
+        </div>
+      </main>
+    </div>
   );
 };
 
