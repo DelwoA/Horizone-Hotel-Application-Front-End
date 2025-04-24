@@ -38,12 +38,12 @@ const HotelListings = () => {
   // Loading state UI
   if (isLoading) {
     return (
-      <section className="sm:my-16 md:my-20 lg:my-12 sm:mx-6 md:mx-8 lg:mx-52">
+      <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">
+          <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-gray-600 mb-8 text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-10 text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -61,7 +61,7 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {Array.from({ length: 4 }, (_, i) => (
             <div
               key={i}
@@ -103,12 +103,12 @@ const HotelListings = () => {
   // Error state UI
   if (isError) {
     return (
-      <section className="sm:my-16 md:my-20 lg:my-12 sm:mx-6 md:mx-8 lg:mx-52">
+      <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">
+          <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-gray-600 mb-8 text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-10 text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -126,7 +126,7 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           <p className="text-red-500 font-medium">
             {error?.toString() || "An error occurred while loading hotels."}
           </p>
