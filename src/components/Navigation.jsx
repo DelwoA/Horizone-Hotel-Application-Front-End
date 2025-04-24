@@ -5,7 +5,6 @@ import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton.jsx";
 
 /**
  * Navigation Component
@@ -55,50 +54,27 @@ const Navigation = () => {
       {/* ===== Left side: Brand and admin links ===== */}
       <div className="flex items-center h-9">
         {/* Brand logo/name with link to homepage */}
-        {!isLoaded ? (
-          // Skeleton for brand name while loading
-          <Skeleton className="h-8 w-28" />
-        ) : (
-          <Link to="/" className="font-bold text-teal-800 text-2xl md:text-2xl">
-            Horizone
-          </Link>
-        )}
+        <Link to="/" className="font-bold text-teal-800 text-2xl md:text-2xl">
+          Horizone
+        </Link>
 
         {/* Admin-only navigation - visible only on tablet and larger screens */}
-        {!isLoaded ? (
-          // Skeleton for potential admin link
-          <Skeleton className="hidden sm:block ml-8 h-6 w-24" />
-        ) : (
-          user?.publicMetadata?.role === "admin" && (
-            <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
-              <Link to={"/admin/hotels/create"}>Create Hotel</Link>
-            </div>
-          )
+        {isLoaded && user?.publicMetadata?.role === "admin" && (
+          <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
+            <Link to={"/admin/hotels/create"}>Create Hotel</Link>
+          </div>
         )}
       </div>
 
       {/* ===== Right side: Actions and user controls ===== */}
       <div className="flex items-center space-x-2 sm:space-x-4 h-9">
         {/* Language selector - hidden on mobile */}
-        {!isLoaded ? (
-          // Skeleton for language selector
-          <Skeleton className="hidden sm:block h-9 w-16" />
-        ) : (
-          <Button
-            variant="ghost"
-            className="font-semibold text-xs text-teal-800 hover:text-primary-color sm:text-sm hidden sm:flex"
-          >
-            <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" /> EN
-          </Button>
-        )}
-
-        {/* Loading skeletons for auth buttons */}
-        {!isLoaded && (
-          <>
-            <Skeleton className="h-9 w-16" />
-            <Skeleton className="h-9 w-20" />
-          </>
-        )}
+        <Button
+          variant="ghost"
+          className="font-semibold text-xs text-teal-800 hover:text-primary-color sm:text-sm hidden sm:flex"
+        >
+          <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" /> EN
+        </Button>
 
         {/* Authentication buttons for signed-out users */}
         {isLoaded && (
@@ -134,52 +110,45 @@ const Navigation = () => {
 
         {/* Mobile menu with dropdown - visible only on small screens */}
         <div className="sm:hidden relative">
-          {!isLoaded ? (
-            // Skeleton for mobile menu button
-            <Skeleton className="h-7 w-7 rounded-full" />
-          ) : (
-            <>
-              {/* Mobile menu toggle button with animation */}
-              <div
-                className={`flex items-center justify-center h-7 w-7 rounded-full transition-colors duration-200 ${
-                  isMenuOpen ? "bg-teal-50" : "hover:bg-teal-50/50"
-                }`}
-                onClick={handleMenuClick}
-              >
-                <EllipsisVertical className="h-4 w-4 text-teal-800 cursor-pointer" />
-              </div>
+          {/* Mobile menu toggle button with animation */}
+          <div
+            className={`flex items-center justify-center h-7 w-7 rounded-full transition-colors duration-200 ${
+              isMenuOpen ? "bg-teal-50" : "hover:bg-teal-50/50"
+            }`}
+            onClick={handleMenuClick}
+          >
+            <EllipsisVertical className="h-4 w-4 text-teal-800 cursor-pointer" />
+          </div>
 
-              {/* Dropdown menu with smooth animation */}
-              <div
-                className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 border border-gray-200
-                  transition-all duration-200 ease-in-out transform origin-top-right
-                  ${
-                    isMenuOpen
-                      ? "opacity-100 scale-100 pointer-events-auto"
-                      : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-                onClick={(e) => e.stopPropagation()} // Prevent clicks inside menu from closing it
+          {/* Dropdown menu with smooth animation */}
+          <div
+            className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 border border-gray-200
+              transition-all duration-200 ease-in-out transform origin-top-right
+              ${
+                isMenuOpen
+                  ? "opacity-100 scale-100 pointer-events-auto"
+                  : "opacity-0 scale-95 pointer-events-none"
+              }`}
+            onClick={(e) => e.stopPropagation()} // Prevent clicks inside menu from closing it
+          >
+            {/* Navigation menu items */}
+            <Link
+              to="/"
+              className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            {isLoaded && user?.publicMetadata?.role === "admin" && (
+              <Link
+                to="/admin/hotels/create"
+                className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+                onClick={() => setIsMenuOpen(false)}
               >
-                {/* Navigation menu items */}
-                <Link
-                  to="/"
-                  className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </Link>
-                {user?.publicMetadata?.role === "admin" && (
-                  <Link
-                    to="/admin/hotels/create"
-                    className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Create Hotel
-                  </Link>
-                )}
-              </div>
-            </>
-          )}
+                Create Hotel
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>
