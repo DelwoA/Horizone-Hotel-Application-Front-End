@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton.jsx";
 
 /**
  * Navigation Component
@@ -56,7 +57,7 @@ const Navigation = () => {
         {/* Brand logo/name with link to homepage */}
         {!isLoaded ? (
           // Skeleton for brand name while loading
-          <div className="h-8 w-28 bg-gray-200 animate-pulse rounded"></div>
+          <Skeleton className="h-8 w-28" />
         ) : (
           <Link to="/" className="font-bold text-teal-800 text-2xl md:text-2xl">
             Horizone
@@ -66,7 +67,7 @@ const Navigation = () => {
         {/* Admin-only navigation - visible only on tablet and larger screens */}
         {!isLoaded ? (
           // Skeleton for potential admin link
-          <div className="hidden sm:block ml-8 h-6 w-24 bg-gray-200 animate-pulse rounded"></div>
+          <Skeleton className="hidden sm:block ml-8 h-6 w-24" />
         ) : (
           user?.publicMetadata?.role === "admin" && (
             <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
@@ -81,7 +82,7 @@ const Navigation = () => {
         {/* Language selector - hidden on mobile */}
         {!isLoaded ? (
           // Skeleton for language selector
-          <div className="hidden sm:block h-9 w-16 bg-gray-200 animate-pulse rounded"></div>
+          <Skeleton className="hidden sm:block h-9 w-16" />
         ) : (
           <Button
             variant="ghost"
@@ -94,8 +95,8 @@ const Navigation = () => {
         {/* Loading skeletons for auth buttons */}
         {!isLoaded && (
           <>
-            <div className="h-9 w-16 bg-gray-200 animate-pulse rounded"></div>
-            <div className="h-9 w-20 bg-gray-200 animate-pulse rounded"></div>
+            <Skeleton className="h-9 w-16" />
+            <Skeleton className="h-9 w-20" />
           </>
         )}
 
@@ -135,7 +136,7 @@ const Navigation = () => {
         <div className="sm:hidden relative">
           {!isLoaded ? (
             // Skeleton for mobile menu button
-            <div className="h-7 w-7 bg-gray-200 animate-pulse rounded-full"></div>
+            <Skeleton className="h-7 w-7 rounded-full" />
           ) : (
             <>
               {/* Mobile menu toggle button with animation */}
