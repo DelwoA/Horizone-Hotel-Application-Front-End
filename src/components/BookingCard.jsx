@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Building, Calendar, Mail, Phone, User, Home } from "lucide-react";
 
-export function BookingCard({ booking }) {
+export const BookingCard = ({ booking }) => {
   // Ensure booking is not undefined
   if (!booking) {
     return null;
@@ -163,6 +163,6 @@ export function BookingCard({ booking }) {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default BookingCard;

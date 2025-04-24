@@ -3,6 +3,7 @@ import { useState } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
 import { useSelector } from "react-redux";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * HotelListings component - Displays a list of hotels with filtering by location.
@@ -61,7 +62,39 @@ const HotelListings = () => {
           })}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <p className="text-gray-600 font-medium">Loading...</p>
+          {Array.from({ length: 4 }, (_, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col"
+            >
+              {/* Image placeholder */}
+              <Skeleton className="h-44 w-full" />
+
+              {/* Content area */}
+              <div className="p-5 flex-grow flex flex-col gap-3">
+                {/* Hotel name */}
+                <Skeleton className="h-6 w-3/4" />
+
+                {/* Location */}
+                <div className="flex items-center">
+                  <Skeleton className="h-4 w-4 mr-1 rounded-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-6 w-16 rounded-md" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+
+                {/* Price */}
+                <div className="mt-2">
+                  <Skeleton className="h-8 w-20 mb-1" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     );
@@ -102,8 +135,6 @@ const HotelListings = () => {
     );
   }
 
-  console.log(hotels);
-
   // Filter hotels based on the selected location
   const filteredHotels =
     selectedLocation === "All"
@@ -111,8 +142,6 @@ const HotelListings = () => {
       : hotels.filter(({ hotel }) =>
           hotel.location.toLowerCase().includes(selectedLocation.toLowerCase())
         );
-
-  console.log(filteredHotels);
 
   // Main UI - Displays hotels after data is loaded
   return (

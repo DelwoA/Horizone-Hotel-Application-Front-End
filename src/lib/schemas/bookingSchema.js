@@ -4,28 +4,26 @@ import * as z from "zod";
 export const bookingFormSchema = z
   .object({
     checkInDate: z.date({
-      required_error: "Check-in date is required.",
+      required_error: "Please select a check-in date",
     }),
     checkOutDate: z.date({
-      required_error: "Check-out date is required.",
+      required_error: "Please select a check-out date",
     }),
     firstName: z.string().min(2, {
-      message: "First name must be at least 2 characters.",
+      message: "First name must be at least 2 characters",
     }),
     lastName: z.string().min(2, {
-      message: "Last name must be at least 2 characters.",
+      message: "Last name must be at least 2 characters",
     }),
     email: z.string().email({
-      message: "Please enter a valid email address.",
+      message: "Please enter a valid email address",
     }),
-    countryCode: z.string({
-      required_error: "Please select a country code.",
+    countryCode: z.string().min(1, {
+      message: "Please select a country code",
     }),
-    phoneNumber: z
-      .string()
-      .min(5, { message: "Phone number must be at least 5 digits." })
-      .regex(/^[0-9]+$/, { message: "Phone number must contain only digits." }),
-    roomNumber: z.number(),
+    phoneNumber: z.string().min(6, {
+      message: "Phone number must be at least 6 digits",
+    }),
   })
   .refine((data) => data.checkOutDate > data.checkInDate, {
     message: "Check-out date must be after check-in date.",
@@ -39,7 +37,6 @@ export const bookingFormDefaultValues = {
   firstName: "",
   lastName: "",
   email: "",
-  countryCode: "",
+  countryCode: "+1", // Default to US/Canada country code
   phoneNumber: "",
-  roomNumber: 1,
 };

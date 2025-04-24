@@ -60,6 +60,21 @@ export const api = createApi({
       }),
     }),
 
+    // Create a Stripe checkout session for a booking
+    // This sends the bookingId to the server, which creates a Stripe checkout session
+    // and returns a sessionId and URL to redirect the user to
+    createCheckoutSession: builder.mutation({
+      query: (bookingId) => ({
+        url: `payment/checkout/${bookingId}`,
+        method: "POST",
+      }),
+    }),
+
+    // Verify payment status for a booking
+    getPaymentStatus: builder.query({
+      query: (bookingId) => `payment/status/${bookingId}`,
+    }),
+
     // Get user bookings
     getUserBookings: builder.query({
       query: (userId) => `bookings/user${userId ? `/${userId}` : ""}`,
@@ -82,8 +97,16 @@ export const api = createApi({
           email: booking.email,
           phone: booking.phoneNumber,
           status: determineBookingStatus(booking.checkIn, booking.checkOut),
+          paymentStatus: booking.paymentStatus || "PENDING",
         }));
       },
+    }),
+
+    // Check Stripe session status directly
+    // This is used on the payment success page to verify payment status
+    // immediately after redirect from Stripe, without waiting for webhook
+    checkStripeSession: builder.query({
+      query: (sessionId) => `payment/session/${sessionId}`,
     }),
   }),
 });
@@ -95,6 +118,9 @@ export const {
   useGetHotelByIdQuery,
   useCreateHotelMutation,
   useCreateBookingMutation,
+  useCreateCheckoutSessionMutation,
+  useGetPaymentStatusQuery,
+  useCheckStripeSessionQuery,
   useGetUserBookingsQuery,
 } = api;
 

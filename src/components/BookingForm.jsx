@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DialogFooter } from "@/components/ui/dialog";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 import { countryCodes } from "@/lib/data/countryCodes";
 import {
@@ -38,12 +40,33 @@ import {
 /**
  * BookingForm component - Handles the hotel booking form
  */
-const BookingForm = ({ onSubmit, onCancel }) => {
+const BookingForm = ({
+  onSubmit,
+  onCancel,
+  onDateChange,
+  priceInfo,
+  hotelPrice,
+}) => {
+  // State to control popovers
+  const [checkInOpen, setCheckInOpen] = useState(false);
+  const [checkOutOpen, setCheckOutOpen] = useState(false);
+
   // Initialize the form with the schema and default values
   const form = useForm({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: bookingFormDefaultValues,
   });
+
+  // Watch for check-in and check-out date changes to calculate price
+  const checkInDate = form.watch("checkInDate");
+  const checkOutDate = form.watch("checkOutDate");
+
+  // Update price when dates change
+  useEffect(() => {
+    if (checkInDate && checkOutDate && onDateChange) {
+      onDateChange(checkInDate, checkOutDate);
+    }
+  }, [checkInDate, checkOutDate, onDateChange]);
 
   return (
     <Form {...form}>
@@ -60,7 +83,7 @@ const BookingForm = ({ onSubmit, onCancel }) => {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Check-in Date</FormLabel>
-                <Popover>
+                <Popover open={checkInOpen} onOpenChange={setCheckInOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -83,7 +106,11 @@ const BookingForm = ({ onSubmit, onCancel }) => {
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
+                      onSelect={(date) => {
+                        field.onChange(date);
+                        // Close the popover after selection
+                        setCheckInOpen(false);
+                      }}
                       disabled={(date) =>
                         date < new Date(new Date().setHours(0, 0, 0, 0))
                       }
@@ -103,7 +130,7 @@ const BookingForm = ({ onSubmit, onCancel }) => {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Check-out Date</FormLabel>
-                <Popover>
+                <Popover open={checkOutOpen} onOpenChange={setCheckOutOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -126,7 +153,11 @@ const BookingForm = ({ onSubmit, onCancel }) => {
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
+                      onSelect={(date) => {
+                        field.onChange(date);
+                        // Close the popover after selection
+                        setCheckOutOpen(false);
+                      }}
                       disabled={(date) => {
                         const checkInDate = form.getValues("checkInDate");
                         return checkInDate
@@ -142,6 +173,29 @@ const BookingForm = ({ onSubmit, onCancel }) => {
             )}
           />
         </div>
+
+        {/* Price calculation card */}
+        {priceInfo && priceInfo.nights > 0 && (
+          <Card className="bg-gray-50 border-teal-100">
+            <CardContent className="pt-4">
+              <CardTitle className="text-lg mb-2">Booking Summary</CardTitle>
+              <div className="text-sm space-y-1">
+                <div className="flex justify-between">
+                  <span>Price per night:</span>
+                  <span>${hotelPrice}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Number of nights:</span>
+                  <span>{priceInfo.nights}</span>
+                </div>
+                <div className="flex justify-between font-bold text-teal-700 border-t border-gray-200 pt-2 mt-2">
+                  <span>Total price:</span>
+                  <span>{priceInfo.formattedPrice}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* First Name */}
@@ -254,25 +308,20 @@ const BookingForm = ({ onSubmit, onCancel }) => {
           />
         </div>
 
-        <DialogFooter className="pt-4 flex-col sm:flex-row gap-2">
+        <DialogFooter className="pt-4">
           <Button
             type="button"
             variant="outline"
-            onClick={() => {
-              form.reset();
-              form.setValue("checkInDate", undefined);
-              form.setValue("checkOutDate", undefined);
-              onCancel();
-            }}
-            className="w-full sm:w-auto order-2 sm:order-1"
+            onClick={onCancel}
+            className="mr-2"
           >
             Cancel
           </Button>
           <Button
             type="submit"
-            className="w-full sm:w-auto order-1 sm:order-2  bg-teal-700 hover:bg-teal-900"
+            className="bg-teal-700 hover:bg-teal-800 text-white"
           >
-            Complete Booking
+            Proceed to Payment
           </Button>
         </DialogFooter>
       </form>
