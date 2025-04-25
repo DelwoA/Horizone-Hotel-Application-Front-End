@@ -33,8 +33,6 @@ const HotelListings = () => {
     setSelectedLocation(location);
   };
 
-  console.log(hotels);
-
   // Loading state UI
   if (isLoading) {
     return (

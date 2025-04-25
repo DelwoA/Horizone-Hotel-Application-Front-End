@@ -35,8 +35,8 @@ createRoot(document.getElementById("root")).render(
             <Route element={<RootLayout />}>
               <Route element={<MainLayout />}>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/hotels" element={<HotelsPage />} />
                 <Route path="/hotels/:id" element={<HotelPage />} />
+                <Route path="/hotels" element={<HotelsPage />} />
                 <Route
                   path="/payment/success"
                   element={<PaymentSuccessPage />}

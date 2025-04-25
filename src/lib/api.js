@@ -32,6 +32,24 @@ export const api = createApi({
       query: () => "hotels",
     }),
 
+    // Get filtered and sorted hotels
+    getFilteredSortedHotels: builder.query({
+      query: ({ locations, sortBy, sortOrder }) => {
+        let queryParams = new URLSearchParams();
+
+        if (locations && locations.length > 0) {
+          queryParams.append("location", locations.join(","));
+        }
+
+        if (sortBy && sortOrder && sortOrder !== "none") {
+          queryParams.append("sortBy", sortBy);
+          queryParams.append("sortOrder", sortOrder);
+        }
+
+        return `hotels/filter?${queryParams.toString()}`;
+      },
+    }),
+
     // Search hotels with AI similarity search
     getHotelsForSearchQuery: builder.query({
       query: ({ query }) => `hotels/search/retrieve?query=${query}`,
@@ -114,6 +132,7 @@ export const api = createApi({
 // Export hooks for using the API endpoints
 export const {
   useGetHotelsQuery,
+  useGetFilteredSortedHotelsQuery,
   useGetHotelsForSearchQueryQuery,
   useGetHotelByIdQuery,
   useCreateHotelMutation,

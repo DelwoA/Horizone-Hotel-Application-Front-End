@@ -58,6 +58,10 @@ const Navigation = () => {
           Horizone
         </Link>
 
+        <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
+          <Link to="/hotels">All Hotels</Link>
+        </div>
+
         {/* Admin-only navigation - visible only on tablet and larger screens */}
         {isLoaded && user?.publicMetadata?.role === "admin" && (
           <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
