@@ -143,6 +143,13 @@ const Navigation = () => {
             >
               Home
             </Link>
+            <Link
+              to="/hotels"
+              className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              All Hotels
+            </Link>
             {isLoaded && user?.publicMetadata?.role === "admin" && (
               <Link
                 to="/admin/hotels/create"
