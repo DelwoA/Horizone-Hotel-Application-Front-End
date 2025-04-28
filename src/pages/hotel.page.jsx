@@ -9,7 +9,23 @@ import { useCreateBookingMutation } from "@/lib/api";
 import HotelBooking from "@/components/HotelBooking";
 
 /**
- * HotelPage component - Displays detailed information about a single hotel
+ * HotelPage Component
+ *
+ * Displays detailed information about a single hotel, including:
+ * - Hotel images and feature badges
+ * - Basic information (name, location, rating)
+ * - Description and amenities
+ * - Pricing and booking functionality
+ *
+ * Features:
+ * - Responsive layout with grid system
+ * - Loading states with skeleton placeholders
+ * - Error handling with user-friendly messages
+ * - Integration with booking system
+ * - Amenities display with icons
+ *
+ * @component
+ * @returns {JSX.Element} Rendered hotel details page
  */
 const HotelPage = () => {
   // Get hotel ID from URL parameters
@@ -35,7 +51,7 @@ const HotelPage = () => {
 
           {/* Right column - Hotel details skeletons */}
           <div className="space-y-4 sm:space-y-6">
-            {/* Hotel name and favorite button */}
+            {/* Hotel name and favorite button skeleton */}
             <div className="flex justify-between items-start">
               <div>
                 <Skeleton className="h-6 sm:h-8 w-48 sm:w-64 mb-2" />
@@ -83,17 +99,25 @@ const HotelPage = () => {
     );
   }
 
-  // Error state UI
+  // Error state UI with user-friendly error message
   if (isError) {
-    return <p className="text-red-500 p-4 mx-52">Error: {isError.message}</p>;
+    return (
+      <div className="container mx-auto px-4 py-6 sm:py-8 min-h-screen">
+        <p className="text-red-500 p-4">
+          {error?.toString() ||
+            "An error occurred while loading hotel details."}
+        </p>
+      </div>
+    );
   }
 
   // Main UI - Displays hotel details after data is loaded
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-10 md:gap-x-8 md:mx-20 lg:mx-52 my-6 sm:my-8 px-4">
-        {/* Left column - Hotel image and tags */}
+        {/* Left column - Hotel image and feature badges */}
         <div>
+          {/* Hotel image with aspect ratio preservation */}
           <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
             <img
               className="w-full h-full object-cover object-center absolute inset-0"
@@ -101,7 +125,7 @@ const HotelPage = () => {
               alt="Image of the Hotel"
             />
           </div>
-          {/* Feature badges */}
+          {/* Feature badges highlighting hotel amenities */}
           <div className="flex flex-wrap gap-2 mt-4 sm:mt-6">
             <Badge variant="secondary">Rooftop View</Badge>
             <Badge variant="secondary">French Cuisine</Badge>
@@ -133,8 +157,8 @@ const HotelPage = () => {
             </div>
           </div>
 
-          {/* Hotel rating display */}
-          <div className="text-teal-600 fill-teal-600  flex items-center mt-4 2xl:mt-6">
+          {/* Hotel rating display with reviews count */}
+          <div className="text-teal-600 fill-teal-600 flex items-center mt-4 2xl:mt-6">
             <Star fill="currentColor" className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
             <p className="font-bold mr-1 text-sm sm:text-base">4.7</p>
             <p className="text-neutral-500 text-sm sm:text-base">
@@ -147,7 +171,7 @@ const HotelPage = () => {
             {hotel.description}
           </p>
 
-          {/* Amenities section */}
+          {/* Amenities section with icon grid */}
           <Card className="mt-6 md:mt-5 2xl:mt-6 p-4">
             <h2 className="text-xl md:text-lg 2xl:text-xl font-semibold mb-3 sm:mb-4">
               Amenities

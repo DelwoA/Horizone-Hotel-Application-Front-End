@@ -9,12 +9,27 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 
+/**
+ * Footer Component
+ *
+ * Displays the site footer with multiple sections:
+ * - Brand information and social media links
+ * - Quick navigation links
+ * - Contact information
+ * - Newsletter subscription form
+ * - Copyright and legal links
+ *
+ * The component is responsive, reorganizing content based on screen size.
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered footer component
+ */
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="mx-10 py-16 md:mx-20 lg:mx-52">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
+          {/* Brand Section - Logo, description and social media links */}
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Horizone</h3>
             <p className="text-gray-400 mb-4">
@@ -48,7 +63,8 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          {/* Quick Links */}
+
+          {/* Quick Links Section - Navigation links to important pages */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">
               Quick Links
@@ -81,7 +97,8 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          {/* Contact Info */}
+
+          {/* Contact Information Section - Address, phone, email */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">
               Contact Us
@@ -101,7 +118,8 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          {/* Newsletter */}
+
+          {/* Newsletter Section - Email signup form */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">
               Newsletter
@@ -121,7 +139,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        {/* Bottom Bar */}
+
+        {/* Bottom Bar - Copyright and legal links */}
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400">

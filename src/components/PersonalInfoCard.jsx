@@ -2,6 +2,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Mail, Phone, MapPin, Pencil } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * PersonalInfoCard Component
+ *
+ * Displays a user's personal information in a card format, including:
+ * - Profile picture or initials avatar
+ * - Full name
+ * - Email address
+ * - Verification status
+ *
+ * Features:
+ * - Responsive layout that adapts to different screen sizes
+ * - Loading state with skeleton placeholders
+ * - Fallback UI for missing user data
+ * - Automatic initials generation for avatar when no image is available
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.user - User object from Clerk containing personal information
+ * @param {boolean} [props.isLoading=false] - Whether the component is in a loading state
+ * @returns {JSX.Element} Rendered card component
+ */
 const PersonalInfoCard = ({ user, isLoading = false }) => {
   // Set default values for user data if it's not available
   const userData = {
