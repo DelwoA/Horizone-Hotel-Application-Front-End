@@ -18,7 +18,7 @@ const LocationTab = (props) => {
   if (props.selectedLocation === props.name) {
     return (
       <div
-        className="text-sm sm:text-base font-medium bg-gray-200 border rounded-md px-3 py-2 cursor-pointer"
+        className="text-sm sm:text-base font-medium bg-teal-600 text-white border rounded-full px-4 py-2 cursor-pointers"
         onClick={handleClick}
       >
         {props.name}
@@ -29,7 +29,7 @@ const LocationTab = (props) => {
   // Render the default (unselected) tab style
   return (
     <div
-      className="text-sm sm:text-base font-medium border rounded-md px-3 py-2 cursor-pointer"
+      className="hover:bg-gray-100 text-gray-700 bg-white text-sm sm:text-base font-medium border rounded-full px-4 py-2 cursor-pointer"
       onClick={handleClick}
     >
       {props.name}

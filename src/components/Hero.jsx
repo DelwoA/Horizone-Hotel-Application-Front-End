@@ -29,11 +29,11 @@ const Hero = () => {
   return (
     <div className="relative min-h-screen">
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center  text-white justify-center px-8 pt-32 pb-32">
-        <h1 className="text-4xl md:text-6xl font-bold  mb-8 text-center">
+      <div className="relative z-10 flex flex-col items-center text-white justify-center px-8 pt-32 pb-32">
+        <h1 className="text-3xl md:text-5xl font-bold mb-8 text-center">
           Find Your Best Staycation
         </h1>
-        <p className="text-xl  mb-12 text-center  max-w-2xl">
+        <p className="text-lg mb-12 text-center max-w-lg lg:max-w-2xl md:max-w-xl">
           Describe your dream destination and experience, and we'll find the
           perfect place for you.
         </p>
@@ -42,7 +42,7 @@ const Hero = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-3xl bg-black/10  backdrop-blur-md lg:h-16 rounded-full p-2 flex items-center"
+          className="w-full md:max-w-xl lg:max-w-3xl bg-black/10 backdrop-blur-md lg:h-16 rounded-full p-2 flex items-center"
         >
           {/* Search input field with transparent styling */}
           <Input

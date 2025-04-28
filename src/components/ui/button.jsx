@@ -4,6 +4,24 @@ import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Button variants configuration using class-variance-authority
+ * Defines all available visual variants and sizes for the Button component
+ *
+ * Variants:
+ * - default: Primary action button with brand color
+ * - destructive: Red button for dangerous actions
+ * - outline: Button with border and transparent background
+ * - secondary: Alternative style button
+ * - ghost: Button that only shows background on hover
+ * - link: Text-only button that looks like a link
+ *
+ * Sizes:
+ * - default: Standard size
+ * - sm: Small size
+ * - lg: Large size
+ * - icon: Square button for icons
+ */
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
@@ -33,8 +51,24 @@ const buttonVariants = cva(
   }
 );
 
+/**
+ * Button Component
+ *
+ * A versatile button component with multiple variants and sizes.
+ * Can render as a button or any other element using asChild prop.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {string} [props.variant] - Visual variant (default, destructive, outline, secondary, ghost, link)
+ * @param {string} [props.size] - Size variant (default, sm, lg, icon)
+ * @param {boolean} [props.asChild=false] - When true, renders children as the root element using Radix UI Slot
+ * @param {React.Ref} ref - Forwarded ref
+ * @returns {JSX.Element} - Rendered button component
+ */
 const Button = React.forwardRef(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    // Use Slot when asChild is true, otherwise use regular button element
     const Comp = asChild ? Slot : "button";
     return (
       <Comp

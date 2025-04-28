@@ -9,7 +9,23 @@ import { useCreateBookingMutation } from "@/lib/api";
 import HotelBooking from "@/components/HotelBooking";
 
 /**
- * HotelPage component - Displays detailed information about a single hotel
+ * HotelPage Component
+ *
+ * Displays detailed information about a single hotel, including:
+ * - Hotel images and feature badges
+ * - Basic information (name, location, rating)
+ * - Description and amenities
+ * - Pricing and booking functionality
+ *
+ * Features:
+ * - Responsive layout with grid system
+ * - Loading states with skeleton placeholders
+ * - Error handling with user-friendly messages
+ * - Integration with booking system
+ * - Amenities display with icons
+ *
+ * @component
+ * @returns {JSX.Element} Rendered hotel details page
  */
 const HotelPage = () => {
   // Get hotel ID from URL parameters
@@ -35,7 +51,7 @@ const HotelPage = () => {
 
           {/* Right column - Hotel details skeletons */}
           <div className="space-y-4 sm:space-y-6">
-            {/* Hotel name and favorite button */}
+            {/* Hotel name and favorite button skeleton */}
             <div className="flex justify-between items-start">
               <div>
                 <Skeleton className="h-6 sm:h-8 w-48 sm:w-64 mb-2" />
@@ -83,25 +99,33 @@ const HotelPage = () => {
     );
   }
 
-  // Error state UI
+  // Error state UI with user-friendly error message
   if (isError) {
-    return <p className="text-red-500 p-4">Error: {isError.message}</p>;
+    return (
+      <div className="container mx-auto px-4 py-6 sm:py-8 min-h-screen">
+        <p className="text-red-500 p-4">
+          {error?.toString() ||
+            "An error occurred while loading hotel details."}
+        </p>
+      </div>
+    );
   }
 
   // Main UI - Displays hotel details after data is loaded
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 mx-auto my-6 sm:my-8 container px-4">
-        {/* Left column - Hotel image and tags */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-10 md:gap-x-8 md:mx-20 lg:mx-52 my-6 sm:my-8 px-4">
+        {/* Left column - Hotel image and feature badges */}
         <div>
-          <div className="object-cover">
+          {/* Hotel image with aspect ratio preservation */}
+          <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
             <img
-              className="rounded-lg w-full h-full"
+              className="w-full h-full object-cover object-center absolute inset-0"
               src={hotel.image}
-              alt="Image of the Montmartre Majesty Hotel"
+              alt="Image of the Hotel"
             />
           </div>
-          {/* Feature badges */}
+          {/* Feature badges highlighting hotel amenities */}
           <div className="flex flex-wrap gap-2 mt-4 sm:mt-6">
             <Badge variant="secondary">Rooftop View</Badge>
             <Badge variant="secondary">French Cuisine</Badge>
@@ -114,7 +138,7 @@ const HotelPage = () => {
           {/* Hotel header with name, location and favorite button */}
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold">
+              <h1 className="text-3xl md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold">
                 {hotel.name}
               </h1>
               <div className="flex items-center mt-1 sm:mt-2 text-neutral-500">
@@ -133,8 +157,8 @@ const HotelPage = () => {
             </div>
           </div>
 
-          {/* Hotel rating display */}
-          <div className="flex items-center mt-4 sm:mt-6">
+          {/* Hotel rating display with reviews count */}
+          <div className="text-teal-600 fill-teal-600 flex items-center mt-4 2xl:mt-6">
             <Star fill="currentColor" className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
             <p className="font-bold mr-1 text-sm sm:text-base">4.7</p>
             <p className="text-neutral-500 text-sm sm:text-base">
@@ -143,13 +167,13 @@ const HotelPage = () => {
           </div>
 
           {/* Hotel description */}
-          <p className="mt-4 sm:mt-6 text-neutral-500 text-sm sm:text-base">
+          <p className="mt-6 md:mt-4 2xl:mt-6 text-neutral-500 text-base md:text-sm 2xl:text-base">
             {hotel.description}
           </p>
 
-          {/* Amenities section */}
-          <Card className="mt-4 sm:mt-6 p-3 sm:p-4">
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+          {/* Amenities section with icon grid */}
+          <Card className="mt-6 md:mt-5 2xl:mt-6 p-4">
+            <h2 className="text-xl md:text-lg 2xl:text-xl font-semibold mb-3 sm:mb-4">
               Amenities
             </h2>
             <div className="grid grid-cols-2 grid-rows-2 gap-3 sm:gap-4">
@@ -173,19 +197,13 @@ const HotelPage = () => {
           </Card>
 
           {/* Price and booking section */}
-          <div className="flex items-center justify-between mt-4 sm:mt-6">
+          <div className="flex items-center justify-between mt-7 mb-8 md:mt-4 sm:mt-6">
             <div>
               <p className="font-bold text-xl sm:text-2xl">${hotel.price}</p>
               <p className="font-medium text-xs sm:text-sm text-neutral-500">
                 per night
               </p>
             </div>
-            {/* <Button
-              className="font-medium h-9 sm:h-10 px-4 sm:px-8 text-sm sm:text-base"
-              onClick={handleBook}
-            >
-              Book Now
-            </Button> */}
             <HotelBooking hotelId={id} />
           </div>
         </div>

@@ -20,52 +20,56 @@ const HotelCard = (props) => {
     <Link
       to={`hotels/${props.hotel._id}`}
       key={props.hotel._id}
-      className="group w-full flex flex-col"
+      className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col"
     >
       {/* Hotel image container with hover effect */}
-      <div className="aspect-[4/3] overflow-hidden rounded-xl">
+      <div className="relative h-44 overflow-hidden">
         <img
-          className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           src={props.hotel.image}
           alt={props.hotel.name}
         />
       </div>
 
       {/* Hotel details section */}
-      <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
+      <div className="p-5 flex-grow">
         {/* Hotel name */}
-        <h3 className="text-lg sm:text-xl font-semibold line-clamp-1">
+        <h3 className="font-bold text-lg text-gray-900 mb-1 line-clamp-1">
           {props.hotel.name}
         </h3>
 
         {/* Location with icon */}
-        <div className="flex items-center text-muted-foreground">
-          <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
-          <p className="text-sm sm:text-base line-clamp-1">
-            {props.hotel.location}
-          </p>
+        <div className="flex items-center text-gray-600 mb-3">
+          <MapPin className="h-4 w-4 mr-1" />
+          <p className="text-sm line-clamp-1">{props.hotel.location}</p>
         </div>
 
         {/* Ratings section */}
-        <div className="flex items-center">
-          <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-primary text-primary" />
-          <span className="ml-1 text-sm sm:text-base font-medium">
-            {props.hotel?.rating ?? "No Rating"}
-          </span>
-          <span className="ml-1 text-xs sm:text-sm text-muted-foreground">
+        <div className="flex items-center mb-4">
+          <div className="flex items-center bg-teal-50 px-2 py-1 rounded">
+            <Star className="h-4 w-4 text-teal-600 fill-teal-600 mr-1" />
+            <span className="font-medium text-teal-700">
+              {props.hotel?.rating ?? "No Rating"}
+            </span>
+          </div>
+          <span className="text-xs text-gray-500 ml-2">
             {`(${props.hotel.reviews?.toLocaleString() ?? "No"} Reviews)`}
           </span>
         </div>
 
-        {/* Price display */}
-        <div className="text-lg sm:text-2xl font-bold mt-1">
-          ${props.hotel.price}
+        {/* Price and similarity display */}
+        <div className="flex flex-col gap-5">
+          <div>
+            <span className="text-2xl font-bold text-gray-900">
+              ${props.hotel.price}
+            </span>
+            <span className="text-gray-500 text-sm">/night</span>
+          </div>
+          <div className="text-xs text-gray-500 mt-1">
+            Similarity:{" "}
+            {props.confidence ? (props.confidence * 100).toFixed(2) : "N/A"}%
+          </div>
         </div>
-
-        {/* Search confidence score (if from search results) */}
-        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-          Similarity: {(props.confidence * 100).toFixed(2)}%
-        </p>
       </div>
     </Link>
   );

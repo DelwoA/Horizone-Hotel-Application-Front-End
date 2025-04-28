@@ -1,5 +1,19 @@
 import BookingCard from "./BookingCard";
 
+/**
+ * BookingsList Component
+ *
+ * Displays a list of user bookings or an empty state message when no bookings exist.
+ * This component handles:
+ * - Checking if bookings array is valid and contains items
+ * - Rendering an empty state message when there are no bookings
+ * - Rendering a list of BookingCard components for each booking
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array} props.bookings - Array of booking objects to display
+ * @returns {JSX.Element} - Rendered list of bookings or empty state
+ */
 export function BookingsList({ bookings }) {
   // Check if bookings exist and are valid
   const hasBookings =
@@ -16,7 +30,7 @@ export function BookingsList({ bookings }) {
     );
   }
 
-  // Display the bookings
+  // Display the bookings list using BookingCard components
   return (
     <div className="space-y-6">
       {bookings.map((booking) => (

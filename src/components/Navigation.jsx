@@ -1,71 +1,166 @@
 import { Button } from "@/components/ui/button.jsx";
 import { Globe } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { useState, useEffect } from "react";
 
 /**
- * Navigation component - Main navigation bar for the application
- * Displays site logo, navigation links, language selector, and auth-related UI components
- * Shows different options based on user authentication status and admin role
+ * Navigation Component
+ *
+ * Provides the main navigation bar with responsive design for both mobile and desktop.
+ * Features:
+ * - Responsive layout with mobile menu
+ * - Authentication-aware UI (different options for signed-in/signed-out users)
+ * - Role-based access control (admin-only features)
+ * - Animated dropdown menu for mobile view
+ * - Language selector
  */
 const Navigation = () => {
-  // Get user data from Clerk authentication
-  const { user } = useUser();
+  // Authentication state from Clerk
+  const { user, isLoaded, isSignedIn } = useUser();
+
+  // Mobile menu state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Toggle mobile menu with propagation stopped to prevent document handler conflicts
+  const handleMenuClick = (e) => {
+    e.stopPropagation();
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Close menu when clicking outside of it
+  useEffect(() => {
+    const closeMenu = () => {
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    // Only attach listener when menu is open to improve performance
+    if (isMenuOpen) {
+      document.addEventListener("click", closeMenu);
+    }
+
+    // Clean up event listener on unmount or when dependencies change
+    return () => {
+      document.removeEventListener("click", closeMenu);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <nav className="flex justify-between items-center bg-black text-white px-4 sm:px-8 py-3 sm:py-4">
-      {/* Left side navigation links */}
+    <nav className="flex justify-between items-center bg-white px-8 py-4 mx-1 md:mx-20 lg:mx-52">
+      {/* ===== Left side: Brand and admin links ===== */}
       <div className="flex items-center h-9">
-        {/* Site logo */}
-        <Link to="/" className="font-bold text-xl sm:text-2xl">
+        {/* Brand logo/name with link to homepage */}
+        <Link to="/" className="font-bold text-teal-800 text-2xl md:text-2xl">
           Horizone
         </Link>
 
-        {/* Hide on mobile to maintain single line */}
-        <div className="hidden sm:block ml-8 font-medium">
-          <Link to="/">Home</Link>
+        <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
+          <Link to="/hotels">All Hotels</Link>
         </div>
 
-        {/* Admin-only navigation link - hidden on mobile */}
-        {user?.publicMetadata?.role === "admin" && (
-          <div className="hidden sm:block ml-8 font-medium">
+        {/* Admin-only navigation - visible only on tablet and larger screens */}
+        {isLoaded && user?.publicMetadata?.role === "admin" && (
+          <div className="hidden sm:block ml-8 font-medium text-teal-800 hover:text-teal-600 transition-colors">
             <Link to={"/admin/hotels/create"}>Create Hotel</Link>
           </div>
         )}
       </div>
 
-      {/* Right side UI elements */}
+      {/* ===== Right side: Actions and user controls ===== */}
       <div className="flex items-center space-x-2 sm:space-x-4 h-9">
-        {/* Language selector */}
+        {/* Language selector - hidden on mobile */}
         <Button
           variant="ghost"
-          className="font-semibold text-xs sm:text-sm hidden sm:flex"
+          className="font-semibold text-xs text-teal-800 hover:text-primary-color sm:text-sm hidden sm:flex"
         >
           <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" /> EN
         </Button>
 
-        {/* Authentication buttons - shown only to signed out users */}
-        <SignedOut>
-          <Button
-            variant="ghost"
-            className="font-semibold text-xs sm:text-sm"
-            asChild
-          >
-            <Link to={"/sign-in"}>Log In</Link>
-          </Button>
-          <Button className="font-semibold text-xs sm:text-sm" asChild>
-            <Link to={"/sign-up"}>Sign Up</Link>
-          </Button>
-        </SignedOut>
+        {/* Authentication buttons for signed-out users */}
+        {isLoaded && (
+          <SignedOut>
+            <Button
+              variant="ghost"
+              className="font-semibold text-xs text-teal-600 hover:bg-teal-50 hover:text-teal-600 sm:text-sm h-9"
+              asChild
+            >
+              <Link to={"/sign-in"}>Log In</Link>
+            </Button>
+            <Button
+              className="font-semibold text-xs text-white bg-teal-600 hover:bg-teal-700 hover:text-white sm:text-sm h-9"
+              asChild
+            >
+              <Link to={"/sign-up"}>Sign Up</Link>
+            </Button>
+          </SignedOut>
+        )}
 
-        {/* User profile and account access - shown only to signed in users */}
-        <SignedIn>
-          <UserButton />
-          <Button className="text-xs sm:text-sm" asChild>
-            <Link to={"/account"}>My Account</Link>
-          </Button>
-        </SignedIn>
+        {/* User profile and account access for signed-in users */}
+        {isLoaded && (
+          <SignedIn>
+            <UserButton />
+            <Button
+              className="font-semibold text-xs text-white bg-teal-600 hover:bg-teal-700 hover:text-white sm:text-sm h-9"
+              asChild
+            >
+              <Link to={"/account"}>My Account</Link>
+            </Button>
+          </SignedIn>
+        )}
+
+        {/* Mobile menu with dropdown - visible only on small screens */}
+        <div className="sm:hidden relative">
+          {/* Mobile menu toggle button with animation */}
+          <div
+            className={`flex items-center justify-center h-7 w-7 rounded-full transition-colors duration-200 ${
+              isMenuOpen ? "bg-teal-50" : "hover:bg-teal-50/50"
+            }`}
+            onClick={handleMenuClick}
+          >
+            <EllipsisVertical className="h-4 w-4 text-teal-800 cursor-pointer" />
+          </div>
+
+          {/* Dropdown menu with smooth animation */}
+          <div
+            className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 border border-gray-200
+              transition-all duration-200 ease-in-out transform origin-top-right
+              ${
+                isMenuOpen
+                  ? "opacity-100 scale-100 pointer-events-auto"
+                  : "opacity-0 scale-95 pointer-events-none"
+              }`}
+            onClick={(e) => e.stopPropagation()} // Prevent clicks inside menu from closing it
+          >
+            {/* Navigation menu items */}
+            <Link
+              to="/"
+              className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/hotels"
+              className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              All Hotels
+            </Link>
+            {isLoaded && user?.publicMetadata?.role === "admin" && (
+              <Link
+                to="/admin/hotels/create"
+                className="block px-4 py-2 text-sm text-teal-800 hover:bg-teal-50 transition-colors duration-150"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Create Hotel
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );

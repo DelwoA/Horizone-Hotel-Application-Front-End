@@ -1,7 +1,29 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Mail, Phone, MapPin, Pencil } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const PersonalInfoCard = ({ user }) => {
+/**
+ * PersonalInfoCard Component
+ *
+ * Displays a user's personal information in a card format, including:
+ * - Profile picture or initials avatar
+ * - Full name
+ * - Email address
+ * - Verification status
+ *
+ * Features:
+ * - Responsive layout that adapts to different screen sizes
+ * - Loading state with skeleton placeholders
+ * - Fallback UI for missing user data
+ * - Automatic initials generation for avatar when no image is available
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.user - User object from Clerk containing personal information
+ * @param {boolean} [props.isLoading=false] - Whether the component is in a loading state
+ * @returns {JSX.Element} Rendered card component
+ */
+const PersonalInfoCard = ({ user, isLoading = false }) => {
   // Set default values for user data if it's not available
   const userData = {
     fullName: user?.fullName || "Not provided",
@@ -9,6 +31,40 @@ const PersonalInfoCard = ({ user }) => {
     phone: user?.phoneNumbers?.[0]?.phoneNumber || "No Phone Number",
     address: user?.address?.streetAddress || "No Address",
   };
+
+  // Loading state UI with skeleton placeholders
+  if (isLoading) {
+    return (
+      <div>
+        <Card className="border border-border">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between mb-4">
+              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-6 w-16" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col md:flex-row gap-10">
+              <div className="flex-shrink-0">
+                <Skeleton className="h-24 w-24 rounded-full" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 flex-grow">
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="flex items-start gap-2">
+                    <Skeleton className="h-5 w-5 mt-0.5" />
+                    <div>
+                      <Skeleton className="h-4 w-24 mb-1" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div>

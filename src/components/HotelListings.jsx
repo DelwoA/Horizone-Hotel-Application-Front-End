@@ -3,6 +3,7 @@ import { useState } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
 import { useSelector } from "react-redux";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * HotelListings component - Displays a list of hotels with filtering by location.
@@ -32,17 +33,15 @@ const HotelListings = () => {
     setSelectedLocation(location);
   };
 
-  console.log(hotels);
-
   // Loading state UI
   if (isLoading) {
     return (
-      <section className="my-12 sm:my-16 md:my-20 mx-4 sm:mx-6 md:mx-8">
+      <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+          <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-10 text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -60,8 +59,40 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          <p>Loading...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {Array.from({ length: 4 }, (_, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col"
+            >
+              {/* Image placeholder */}
+              <Skeleton className="h-44 w-full" />
+
+              {/* Content area */}
+              <div className="p-5 flex-grow flex flex-col gap-3">
+                {/* Hotel name */}
+                <Skeleton className="h-6 w-3/4" />
+
+                {/* Location */}
+                <div className="flex items-center">
+                  <Skeleton className="h-4 w-4 mr-1 rounded-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-6 w-16 rounded-md" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+
+                {/* Price */}
+                <div className="mt-2">
+                  <Skeleton className="h-8 w-20 mb-1" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     );
@@ -70,12 +101,12 @@ const HotelListings = () => {
   // Error state UI
   if (isError) {
     return (
-      <section className="my-12 sm:my-16 md:my-20 mx-4 sm:mx-6 md:mx-8">
+      <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+          <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">
             Top trending hotels worldwide
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg md:text-xl font-medium">
+          <p className="text-gray-600 mb-10 text-lg md:text-xl font-medium">
             Discover the most trending hotels worldwide for an unforgettable
             experience.
           </p>
@@ -93,14 +124,14 @@ const HotelListings = () => {
             );
           })}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          <p className="text-red-500">{error}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <p className="text-red-500 font-medium">
+            {error?.toString() || "An error occurred while loading hotels."}
+          </p>
         </div>
       </section>
     );
   }
-
-  console.log(hotels);
 
   // Filter hotels based on the selected location
   const filteredHotels =
@@ -110,17 +141,15 @@ const HotelListings = () => {
           hotel.location.toLowerCase().includes(selectedLocation.toLowerCase())
         );
 
-  console.log(filteredHotels);
-
   // Main UI - Displays hotels after data is loaded
   return (
-    <section className="my-12 sm:my-16 md:my-20 mx-4 sm:mx-6 md:mx-8">
+    <section className="py-10 mx-10 md:py-14 lg:py-12 md:mx-20 lg:mx-52">
       {/* Section header */}
       <div className="mb-8 sm:mb-10 md:mb-12">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+        <h2 className="text-3xl md:text-3xl font-bold mb-6 sm:mb-4 text-gray-900">
           Top trending hotels worldwide
         </h2>
-        <p className="text-muted-foreground text-base sm:text-lg md:text-xl font-medium">
+        <p className="text-gray-600 mb-10 text-lg md:text-xl font-medium">
           Discover the most trending hotels worldwide for an unforgettable
           experience.
         </p>
@@ -141,7 +170,7 @@ const HotelListings = () => {
       </div>
 
       {/* Hotel cards grid - destructures hotel and confidence from each item */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {filteredHotels.map(({ hotel, confidence }) => {
           return (
             <HotelCard key={hotel._id} hotel={hotel} confidence={confidence} />

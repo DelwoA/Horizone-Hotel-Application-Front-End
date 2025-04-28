@@ -65,11 +65,8 @@ const CreateHotelForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="w-full sm:w-4/5 md:w-2/3 lg:w-1/2"
-      >
-        <div className="grid gap-3 sm:gap-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full">
+        <div className="grid gap-6 sm:gap-8">
           {/* Hotel Name Field */}
           <FormField
             control={form.control}
@@ -83,7 +80,7 @@ const CreateHotelForm = () => {
                   <Input
                     placeholder="Hotel Name"
                     {...field}
-                    className="text-sm sm:text-base py-2"
+                    className="text-sm sm:text-base py-2 bg-white"
                   />
                 </FormControl>
                 <FormDescription className="text-xs sm:text-sm">
@@ -93,7 +90,6 @@ const CreateHotelForm = () => {
               </FormItem>
             )}
           />
-
           {/* Location Field */}
           <FormField
             control={form.control}
@@ -105,7 +101,7 @@ const CreateHotelForm = () => {
                   <Input
                     placeholder="Location"
                     {...field}
-                    className="text-sm sm:text-base py-2"
+                    className="text-sm sm:text-base py-2 bg-white"
                   />
                 </FormControl>
                 <FormDescription className="text-xs sm:text-sm">
@@ -115,7 +111,6 @@ const CreateHotelForm = () => {
               </FormItem>
             )}
           />
-
           {/* Image URL Field */}
           <FormField
             control={form.control}
@@ -127,7 +122,7 @@ const CreateHotelForm = () => {
                   <Input
                     placeholder="Image URL"
                     {...field}
-                    className="text-sm sm:text-base py-2"
+                    className="text-sm sm:text-base py-2 bg-white"
                   />
                 </FormControl>
                 <FormDescription className="text-xs sm:text-sm">
@@ -137,7 +132,6 @@ const CreateHotelForm = () => {
               </FormItem>
             )}
           />
-
           {/* Price Field - with special handling for number conversion */}
           <FormField
             control={form.control}
@@ -153,7 +147,7 @@ const CreateHotelForm = () => {
                       field.onChange(parseFloat(e.target.value));
                     }}
                     value={field.value}
-                    className="text-sm sm:text-base py-2"
+                    className="text-sm sm:text-base py-2 bg-white"
                   />
                 </FormControl>
                 <FormDescription className="text-xs sm:text-sm">
@@ -163,7 +157,6 @@ const CreateHotelForm = () => {
               </FormItem>
             )}
           />
-
           {/* Description Field - uses Textarea for longer content */}
           <FormField
             control={form.control}
@@ -177,7 +170,7 @@ const CreateHotelForm = () => {
                   <Textarea
                     placeholder="Description"
                     {...field}
-                    className="text-sm sm:text-base min-h-[100px] sm:min-h-[120px]"
+                    className="text-sm sm:text-base min-h-[100px] sm:min-h-[120px] bg-white"
                   />
                 </FormControl>
                 <FormDescription className="text-xs sm:text-sm">
@@ -188,13 +181,12 @@ const CreateHotelForm = () => {
             )}
           />
         </div>
-
         {/* Form Submission Button - shows loading state */}
-        <div className="mt-4">
+        <div className="mt-10">
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full sm:w-auto text-sm sm:text-base py-2 px-4"
+            className="w-full sm:w-auto text-sm sm:text-base py-2 px-4 bg-teal-600 hover:bg-teal-700"
           >
             {isLoading ? "Creating..." : "Create Hotel"}
           </Button>
