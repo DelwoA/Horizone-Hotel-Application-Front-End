@@ -13,12 +13,16 @@ import { Link } from "react-router";
  * @param {number} props.hotel.reviews - Number of reviews
  * @param {number} props.hotel.price - Price per night
  * @param {number} props.confidence - Confidence score for search results (if applicable)
+ * @param {string} props.routePrefix - Prefix for the route path (default: "/hotels/")
  */
 const HotelCard = (props) => {
+  // Use the provided routePrefix or default to "/hotels/"
+  const routePrefix = props.routePrefix || "/hotels/";
+
   return (
     // Wrap the entire card in a Link for navigation to the hotel detail page
     <Link
-      to={`hotels/${props.hotel._id}`}
+      to={`${routePrefix}${props.hotel._id}`}
       key={props.hotel._id}
       className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col"
     >

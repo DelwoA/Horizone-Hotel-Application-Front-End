@@ -173,7 +173,12 @@ const HotelListings = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {filteredHotels.map(({ hotel, confidence }) => {
           return (
-            <HotelCard key={hotel._id} hotel={hotel} confidence={confidence} />
+            <HotelCard
+              key={hotel._id}
+              hotel={hotel}
+              confidence={confidence}
+              routePrefix="/hotels/"
+            />
           );
         })}
       </div>

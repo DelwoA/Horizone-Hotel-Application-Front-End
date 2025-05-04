@@ -242,11 +242,14 @@ const HotelListings = () => {
                 key={hotel._id}
                 hotel={hotel}
                 confidence={confidence}
+                routePrefix="/hotels/"
               />
             ))
           : // For filtered/sorted results (standard hotel objects)
             hotels &&
-            hotels.map((hotel) => <HotelCard key={hotel._id} hotel={hotel} />)}
+            hotels.map((hotel) => (
+              <HotelCard key={hotel._id} hotel={hotel} routePrefix="/hotels/" />
+            ))}
       </div>
     </section>
   );
