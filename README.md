@@ -79,7 +79,7 @@ This guide walks you through setting up **Clerk Authentication** in the **Horizo
 3. **Install Dependencies**
 
    ```bash
-   npm install
+   npm i
    ```
 
    This will create the `node_modules` folder with all necessary packages.
@@ -98,32 +98,26 @@ This guide walks you through setting up **Clerk Authentication** in the **Horizo
    * Enter a name (e.g., `Horizone Hotels`).
    * Toggle ON desired authentication methods (e.g., Email, Google, Apple).
 
-   📸 *Insert screenshot here (Application setup with toggles)*
+   ![Setting up Clerk, step 1](https://github.com/user-attachments/assets/28feacce-cd7c-4756-9929-acdadc0778bc)
 
-3. **Preview Sign-In Page**
-
-   * After clicking **Create Application**, a preview of your sign-in page will be shown.
-
-   📸 *Insert screenshot here (Clerk sign-in preview UI)*
-
-4. **Choose Framework**
+3. **Choose Framework**
 
    * Select **React** from the setup options.
 
-   📸 *Insert screenshot here (Framework selection screen)*
+   ![Setting up Clerk, step 2](https://github.com/user-attachments/assets/fdf53ff5-d9e4-4bb9-96a9-04b3ae7ed8fd)
 
-5. **Continue to Quickstart**
+4. **Continue to Quickstart**
 
-   * Scroll down and click **Continue to the React Router quickstart**.
+   * Scroll down and click **Continue to view the Clerk API Keys**.
 
-   📸 *Insert screenshot here (Quickstart button section)*
+   ![Setting up Clerk, step 3](https://github.com/user-attachments/assets/c020d9d5-f9dc-46bc-83a1-0533338f8003)
 
-6. **Set Clerk API Keys**
+5. **Set Clerk API Keys**
 
    * On the next screen, you’ll see a section titled `Set your Clerk API keys`.
    * Copy the value of `VITE_CLERK_PUBLISHABLE_KEY` only (do not copy the secret key).
 
-   📸 *Insert screenshot here (API key section)*
+   ![Setting up Clerk, step 3](https://github.com/user-attachments/assets/abe21c9e-6774-440b-a952-f39656c0953d)
 <br><br><br>
 
 
@@ -162,7 +156,7 @@ Visit your app at `http://localhost:5173` and sign up to create your first user!
 
 * Never commit your **`.env`** file to GitHub.
 * Only the **publishable key** should be used in frontend code. Keep the **secret key** private.
-<br><br>
+<br><br><br>
 
 
 Happy Coding! 🚀
