@@ -48,10 +48,12 @@ Horizone is built using a modern tech stack:
 * By understanding the true intent behind user queries, our platform helps travelers find exactly what they're looking for with less time and effort.
 * For hotel owners, our platform provides greater visibility and better matching with the right guests, leading to increased booking rates and customer satisfaction.
 * This project demonstrates how AI can be thoughtfully integrated into everyday applications to solve real user problems while maintaining a focus on security, performance, and user experience.
-<br><br>
+<br><br><br>
 
 
 👉 **You can access the back-end repository of this project here: [Horizone Hotel Application – Back-End](https://github.com/DelwoA/Horizone-Hotel-Application-Back-End)**
+<br><br>
+🌐 Horizone Hotels deployed application => https://horizonehotels-delwoathauda.netlify.app
 <br><br><br><br>
 
 ---
