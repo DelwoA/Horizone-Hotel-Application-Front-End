@@ -1,150 +1,59 @@
-import { useEffect, useState } from "react";
-import { useSearchParams, Link } from "react-router";
-import { useCheckStripeSessionQuery } from "@/lib/api";
-import { Check, AlertTriangle, ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
+import { useLocation, Link, useNavigate } from "react-router";
+import { Check, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import {
+  validatePaymentSuccessAccess,
+  handleInvalidPaymentAccess,
+} from "@/lib/utils/payment-protection";
 
 /**
  * PaymentSuccessPage Component
  *
- * This component handles the payment confirmation flow after a user returns from Stripe checkout.
- * It verifies the payment status and displays appropriate success/failure UI.
+ * This component displays the payment success UI after a successful payment verification.
+ * It receives session data from the verify-payment page through navigation state and
+ * presents detailed booking information to the user.
  *
  * Features:
- * - Payment verification with Stripe session ID
- * - Loading state with spinner animation
- * - Error handling with detailed error messages
- * - Success state with booking details display
- * - Navigation options for both success and failure cases
+ * - Success confirmation with checkmark icon
+ * - Detailed booking information display
+ * - Transaction reference display
+ * - Navigation options to continue user journey
+ * - Responsive design with proper spacing
  *
- * Flow:
- * 1. Extract Stripe session ID from URL
- * 2. Verify payment status with backend
- * 3. Show appropriate UI based on verification result
- * 4. Provide navigation options to continue
+ * Data Source:
+ * - Receives sessionData, sessionId, and bookingId from navigation state
+ * - Fallback handling for direct page access
+ *
+ * Route: /payment-success
  *
  * @component
- * @returns {JSX.Element} Rendered payment confirmation page
+ * @returns {JSX.Element} Payment success confirmation page
  */
 const PaymentSuccessPage = () => {
-  const [searchParams] = useSearchParams();
-  // Get session_id from URL params - this is added by Stripe when redirecting back
-  const sessionId = searchParams.get("session_id");
-  const [bookingId, setBookingId] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Verify payment status with Stripe through our backend
-  const {
-    data: sessionData,
-    isLoading,
-    error,
-    isError,
-  } = useCheckStripeSessionQuery(sessionId, { skip: !sessionId });
+  // Get data from navigation state (passed from verify-payment page)
+  const { sessionData, sessionId, bookingId, bookingDetails } =
+    location.state || {};
 
-  // Handle session data updates and error logging
   useEffect(() => {
-    console.log("Payment success page mounted. Session ID:", sessionId);
-    console.log("Session data:", sessionData);
+    console.log("Payment success page mounted");
+    console.log("Session data received:", sessionData);
 
-    if (sessionData?.bookingId) {
-      setBookingId(sessionData.bookingId);
+    // Validate access to payment success page
+    const validation = validatePaymentSuccessAccess(location.state);
+
+    if (!validation.isValid) {
+      handleInvalidPaymentAccess(navigate, toast, validation.reason);
+      return;
     }
 
-    if (isError) {
-      console.error("Error checking payment status:", error);
-      toast.error("Error verifying payment status");
-    }
-  }, [sessionId, sessionData, error, isError]);
-
-  // Loading state UI with spinner animation
-  if (isLoading) {
-    return (
-      <div className="max-w-lg mx-auto py-12 px-4">
-        <div className="text-center mb-8">
-          {/* Loading spinner */}
-          <div className="inline-flex items-center justify-center h-24 w-24 rounded-full bg-gray-100 mb-6">
-            <div className="h-12 w-12 border-2 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-
-          <h1 className="text-2xl font-bold mb-2">Verifying Payment</h1>
-
-          <p className="text-neutral-600 mb-6">
-            Please wait while we verify your payment...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state UI or failed payment handling
-  if (isError || (sessionData && sessionData.paymentStatus !== "PAID")) {
-    return (
-      <div className="max-w-lg mx-auto py-12 px-4">
-        <div className="text-center mb-8">
-          {/* Error icon */}
-          <div className="inline-flex items-center justify-center h-24 w-24 rounded-full bg-red-100 mb-6">
-            <AlertTriangle className="h-12 w-12 text-red-600" />
-          </div>
-
-          <h1 className="text-2xl font-bold mb-2">Payment Failed</h1>
-
-          {/* Error message with fallback */}
-          <p className="text-neutral-600 mb-6">
-            {isError
-              ? `Error: ${
-                  error?.toString() ||
-                  "An error occurred while processing your payment."
-                }`
-              : "Your payment could not be completed. Please try again or contact customer support."}
-          </p>
-
-          {/* Transaction details for reference */}
-          {sessionId && (
-            <div className="bg-gray-50 p-4 rounded-lg mb-6">
-              <h3 className="font-semibold text-red-600 mb-2 text-left">
-                Transaction Details
-              </h3>
-              <div className="divide-y divide-gray-200">
-                <div className="py-2 flex justify-between">
-                  <span className="text-sm text-gray-500">
-                    Transaction Reference:
-                  </span>
-                  <span className="text-sm font-mono">
-                    {sessionId.substring(0, 12)}...
-                  </span>
-                </div>
-                {sessionData?.bookingId && (
-                  <div className="py-2 flex justify-between">
-                    <span className="text-sm text-gray-500">Booking ID:</span>
-                    <span className="text-sm">{sessionData.bookingId}</span>
-                  </div>
-                )}
-                {sessionData?.bookingDetails?.roomNumber && (
-                  <div className="py-2 flex justify-between">
-                    <span className="text-sm text-gray-500">Room Number:</span>
-                    <span className="text-sm">
-                      {sessionData.bookingDetails.roomNumber}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Navigation buttons */}
-          <div className="space-y-3">
-            <Button asChild className="w-full bg-teal-700 hover:bg-teal-800">
-              <Link to="/">Return Home</Link>
-            </Button>
-
-            <Button asChild variant="outline" className="w-full">
-              <Link to="/account">View My Bookings</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    // Show success toast if validation passes
+    toast.success("Payment completed successfully!");
+  }, [location.state, navigate]);
 
   // Success state UI - payment verified successfully
   return (
@@ -176,47 +85,40 @@ const PaymentSuccessPage = () => {
                   {sessionId.substring(0, 12)}...
                 </span>
               </div>
-              {sessionData?.bookingDetails && (
+              {bookingDetails && (
                 <>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Booking ID:</span>
-                    <span className="text-sm font-medium">
-                      {sessionData.bookingId}
-                    </span>
+                    <span className="text-sm font-medium">{bookingId}</span>
                   </div>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Hotel:</span>
                     <span className="text-sm font-medium">
-                      {sessionData.bookingDetails.hotelName}
+                      {bookingDetails.hotelName}
                     </span>
                   </div>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Guest:</span>
                     <span className="text-sm font-medium">
-                      {sessionData.bookingDetails.firstName}{" "}
-                      {sessionData.bookingDetails.lastName}
+                      {bookingDetails.firstName} {bookingDetails.lastName}
                     </span>
                   </div>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Room Number:</span>
                     <span className="text-sm font-medium text-teal-700">
-                      {sessionData.bookingDetails.roomNumber}
+                      {bookingDetails.roomNumber}
                     </span>
                   </div>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Check-in:</span>
                     <span className="text-sm font-medium">
-                      {new Date(
-                        sessionData.bookingDetails.checkIn
-                      ).toLocaleDateString()}
+                      {new Date(bookingDetails.checkIn).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="py-2 flex justify-between">
                     <span className="text-sm text-gray-500">Check-out:</span>
                     <span className="text-sm font-medium">
-                      {new Date(
-                        sessionData.bookingDetails.checkOut
-                      ).toLocaleDateString()}
+                      {new Date(bookingDetails.checkOut).toLocaleDateString()}
                     </span>
                   </div>
                 </>
